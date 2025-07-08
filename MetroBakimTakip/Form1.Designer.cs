@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnFilter = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,7 +132,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(338, 342);
+            this.btnSave.Location = new System.Drawing.Point(338, 229);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 11;
@@ -142,7 +143,7 @@
             // dgvRecords
             // 
             this.dgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRecords.Location = new System.Drawing.Point(867, 234);
+            this.dgvRecords.Location = new System.Drawing.Point(843, 214);
             this.dgvRecords.Name = "dgvRecords";
             this.dgvRecords.RowHeadersWidth = 51;
             this.dgvRecords.RowTemplate.Height = 24;
@@ -193,11 +194,22 @@
             this.btnFilter.UseVisualStyleBackColor = true;
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(513, 228);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 19;
+            this.btnDelete.Text = "Sil";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1381, 483);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnFilter);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -222,6 +234,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
@@ -244,5 +257,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnFilter;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

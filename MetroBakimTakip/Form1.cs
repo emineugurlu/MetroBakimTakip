@@ -116,5 +116,34 @@ namespace MetroBakimTakip
         private void label1_Click(object sender, EventArgs e) { }
         private void label3_Click(object sender, EventArgs e) { }
         private void dgvRecords_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dgvRecords.SelectedRows.Count > 0)
+            {
+                int selectedId = Convert.ToInt32(dgvRecords.SelectedRows[0].Cells["Id"].Value);
+
+                string connectionString = "Data Source=metro.db;Version=3;";
+                using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "DELETE FROM Faults WHERE Id = @id";
+
+                    using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", selectedId);
+                        command.ExecuteNonQuery();
+                    }
+                    connection.Close();
+                }
+
+                MessageBox.Show("Kayıt başarıyla silindi.");
+                LoadRecords(); // tabloyu yenile
+            }
+            else
+            {
+                MessageBox.Show("Lütfen silinecek bir kayıt seçin.");
+            }
+        }
     }
 }
