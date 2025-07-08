@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
-
 namespace MetroBakimTakip
 {
     public partial class Form1 : Form
@@ -35,7 +34,6 @@ namespace MetroBakimTakip
 
             string connectionString = "Data Source=metro.db;Version=3;";
 
-
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
@@ -58,7 +56,37 @@ namespace MetroBakimTakip
             }
 
             MessageBox.Show("Kayıt başarıyla eklendi!");
+
+            LoadRecords(); // Yeni eklenen veriyi tabloya yansıt
         }
 
+        private void dgvRecords_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            LoadRecords(); // Form açıldığında verileri yükle
+        }
+
+        private void LoadRecords()
+        {
+            string connectionString = "Data Source=metro.db;Version=3;";
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT * FROM Faults"; // Faults tablosu
+
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, connection);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                dgvRecords.DataSource = dt;
+
+                connection.Close();
+            }
+        }
     }
 }

@@ -40,6 +40,8 @@
             this.lblDate = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
+            this.dgvRecords = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.SuspendLayout();
             // 
             // lblStationName
@@ -143,11 +145,23 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // dgvRecords
+            // 
+            this.dgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRecords.Location = new System.Drawing.Point(1102, 37);
+            this.dgvRecords.Name = "dgvRecords";
+            this.dgvRecords.RowHeadersWidth = 51;
+            this.dgvRecords.RowTemplate.Height = 24;
+            this.dgvRecords.Size = new System.Drawing.Size(240, 150);
+            this.dgvRecords.TabIndex = 12;
+            this.dgvRecords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRecords_CellContentClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1381, 483);
+            this.Controls.Add(this.dgvRecords);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblDate);
@@ -162,6 +176,7 @@
             this.Controls.Add(this.lblStationName);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -181,6 +196,7 @@
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.DataGridView dgvRecords;
     }
 }
 
