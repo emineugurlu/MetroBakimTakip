@@ -88,5 +88,38 @@ namespace MetroBakimTakip
                 connection.Close();
             }
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string connectionString = "Data Source=metro.db;Version=3;";
+            string startDate = dtpStart.Value.ToString("yyyy-MM-dd");
+            string endDate = dtpEnd.Value.ToString("yyyy-MM-dd");
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT * FROM Faults WHERE Date BETWEEN @start AND @end";
+
+                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@start", startDate);
+                    command.Parameters.AddWithValue("@end", endDate);
+
+                    SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+
+                    dgvRecords.DataSource = table;
+                }
+
+                connection.Close();
+            }
+        }
     }
 }

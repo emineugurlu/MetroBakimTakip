@@ -41,6 +41,11 @@
             this.lblTime = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.dgvRecords = new System.Windows.Forms.DataGridView();
+            this.dtpStart = new System.Windows.Forms.DateTimePicker();
+            this.dtpEnd = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnFilter_Click = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -148,19 +153,68 @@
             // dgvRecords
             // 
             this.dgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRecords.Location = new System.Drawing.Point(1102, 37);
+            this.dgvRecords.Location = new System.Drawing.Point(867, 234);
             this.dgvRecords.Name = "dgvRecords";
             this.dgvRecords.RowHeadersWidth = 51;
             this.dgvRecords.RowTemplate.Height = 24;
-            this.dgvRecords.Size = new System.Drawing.Size(240, 150);
+            this.dgvRecords.Size = new System.Drawing.Size(464, 237);
             this.dgvRecords.TabIndex = 12;
             this.dgvRecords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRecords_CellContentClick);
+            // 
+            // dtpStart
+            // 
+            this.dtpStart.Location = new System.Drawing.Point(867, 47);
+            this.dtpStart.Name = "dtpStart";
+            this.dtpStart.Size = new System.Drawing.Size(200, 22);
+            this.dtpStart.TabIndex = 13;
+            // 
+            // dtpEnd
+            // 
+            this.dtpEnd.Location = new System.Drawing.Point(867, 103);
+            this.dtpEnd.Name = "dtpEnd";
+            this.dtpEnd.Size = new System.Drawing.Size(200, 22);
+            this.dtpEnd.TabIndex = 14;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(743, 49);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(110, 16);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Başlangıç Tarihi :";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(743, 109);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(75, 16);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Bitiş Tarihi :";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // btnFilter_Click
+            // 
+            this.btnFilter_Click.Location = new System.Drawing.Point(818, 160);
+            this.btnFilter_Click.Name = "btnFilter_Click";
+            this.btnFilter_Click.Size = new System.Drawing.Size(75, 23);
+            this.btnFilter_Click.TabIndex = 17;
+            this.btnFilter_Click.Text = "Filtrele";
+            this.btnFilter_Click.UseVisualStyleBackColor = true;
+            this.btnFilter_Click.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1381, 483);
+            this.Controls.Add(this.btnFilter_Click);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.dtpEnd);
+            this.Controls.Add(this.dtpStart);
             this.Controls.Add(this.dgvRecords);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lblTime);
@@ -197,6 +251,11 @@
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.DataGridView dgvRecords;
+        private System.Windows.Forms.DateTimePicker dtpStart;
+        private System.Windows.Forms.DateTimePicker dtpEnd;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnFilter_Click;
     }
 }
 
