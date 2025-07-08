@@ -2,15 +2,8 @@
 {
     partial class Form1
     {
-        /// <summary>
-        ///Gerekli tasarımcı değişkeni.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        ///Kullanılan tüm kaynakları temizleyin.
-        /// </summary>
-        ///<param name="disposing">yönetilen kaynaklar dispose edilmeliyse doğru; aksi halde yanlış.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,12 +13,8 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer üretilen kod
+        #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Tasarımcı desteği için gerekli metot - bu metodun 
-        ///içeriğini kod düzenleyici ile değiştirmeyin.
-        /// </summary>
         private void InitializeComponent()
         {
             this.lblStationName = new System.Windows.Forms.Label();
@@ -45,7 +34,7 @@
             this.dtpEnd = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnFilter_Click = new System.Windows.Forms.Button();
+            this.btnFilter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -192,25 +181,24 @@
             this.label3.Size = new System.Drawing.Size(75, 16);
             this.label3.TabIndex = 16;
             this.label3.Text = "Bitiş Tarihi :";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // btnFilter_Click
+            // btnFilter
             // 
-            this.btnFilter_Click.Location = new System.Drawing.Point(818, 160);
-            this.btnFilter_Click.Name = "btnFilter_Click";
-            this.btnFilter_Click.Size = new System.Drawing.Size(75, 23);
-            this.btnFilter_Click.TabIndex = 17;
-            this.btnFilter_Click.Text = "Filtrele";
-            this.btnFilter_Click.UseVisualStyleBackColor = true;
-            this.btnFilter_Click.Click += new System.EventHandler(this.button1_Click);
+            this.btnFilter.Location = new System.Drawing.Point(818, 160);
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Size = new System.Drawing.Size(75, 23);
+            this.btnFilter.TabIndex = 17;
+            this.btnFilter.Text = "Filtrele";
+            this.btnFilter.UseVisualStyleBackColor = true;
+            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1381, 483);
-            this.Controls.Add(this.btnFilter_Click);
+            this.Controls.Add(this.btnFilter);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dtpEnd);
@@ -229,11 +217,11 @@
             this.Controls.Add(this.txtStationName);
             this.Controls.Add(this.lblStationName);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Metro Bakım Takip";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -255,7 +243,6 @@
         private System.Windows.Forms.DateTimePicker dtpEnd;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnFilter_Click;
+        private System.Windows.Forms.Button btnFilter;
     }
 }
-

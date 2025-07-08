@@ -19,11 +19,13 @@ namespace MetroBakimTakip
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        // Form yüklendiğinde verileri getir
+        private void Form1_Load(object sender, EventArgs e)
         {
-
+            LoadRecords();
         }
 
+        // Kayıt ekleme
         private void btnSave_Click(object sender, EventArgs e)
         {
             string stationName = txtStationName.Text;
@@ -57,19 +59,10 @@ namespace MetroBakimTakip
 
             MessageBox.Show("Kayıt başarıyla eklendi!");
 
-            LoadRecords(); // Yeni eklenen veriyi tabloya yansıt
+            LoadRecords(); // Yeni kayıt sonrası tabloyu güncelle
         }
 
-        private void dgvRecords_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            LoadRecords(); // Form açıldığında verileri yükle
-        }
-
+        // Tüm kayıtları DataGridView'e yükle
         private void LoadRecords()
         {
             string connectionString = "Data Source=metro.db;Version=3;";
@@ -78,7 +71,7 @@ namespace MetroBakimTakip
             {
                 connection.Open();
 
-                string query = "SELECT * FROM Faults"; // Faults tablosu
+                string query = "SELECT * FROM Faults";
 
                 SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, connection);
                 DataTable dt = new DataTable();
@@ -89,16 +82,13 @@ namespace MetroBakimTakip
             }
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        // Tarih aralığına göre filtreleme
+        private void btnFilter_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string connectionString = "Data Source=metro.db;Version=3;";
             string startDate = dtpStart.Value.ToString("yyyy-MM-dd");
             string endDate = dtpEnd.Value.ToString("yyyy-MM-dd");
+
+            string connectionString = "Data Source=metro.db;Version=3;";
 
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
@@ -112,14 +102,19 @@ namespace MetroBakimTakip
                     command.Parameters.AddWithValue("@end", endDate);
 
                     SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
-                    DataTable table = new DataTable();
-                    adapter.Fill(table);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
 
-                    dgvRecords.DataSource = table;
+                    dgvRecords.DataSource = dt;
                 }
 
                 connection.Close();
             }
         }
+
+        // Olay işleyicileri (gerekliyse boş bırakabilirsin)
+        private void label1_Click(object sender, EventArgs e) { }
+        private void label3_Click(object sender, EventArgs e) { }
+        private void dgvRecords_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
     }
 }
