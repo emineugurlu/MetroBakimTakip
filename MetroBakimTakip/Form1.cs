@@ -17,7 +17,6 @@ namespace MetroBakimTakip
         public Form1()
         {
             InitializeComponent();
-            // Form yüklendiğinde kayıtları ve toplam sayıyı çek
             this.Load += Form1_Load;
         }
 
@@ -26,25 +25,26 @@ namespace MetroBakimTakip
             LoadRecords();
         }
 
-        // ---------------------------------------
-        // Centralized LoadRecords(): 
-        //  • DataGridView'e yükler 
-        //  • lblTotalRecords'i günceller
-        // ---------------------------------------
+        // ------------------------------------------------
+        // Kayıtları VeriGridView'e yükler ve sayacı günceller
+        // ------------------------------------------------
         private void LoadRecords()
         {
             using (var conn = new SQLiteConnection(ConnectionString))
             {
                 conn.Open();
 
-                // 1) Tüm kayıtlari DataGridView'e çek
-                string sql = "SELECT FaultID, StationName, Title, Description, Date, Time FROM Faults";
+                // 1) Tüm kayıtlar
+                string sql = @"
+                    SELECT 
+                        Id, StationName, Title, Description, Date, Time 
+                    FROM Faults";
                 var adapter = new SQLiteDataAdapter(sql, conn);
                 var dt = new DataTable();
                 adapter.Fill(dt);
                 dgvRecords.DataSource = dt;
 
-                // 2) Toplam kayit sayisini al
+                // 2) Toplam kayıt sayısı
                 string countSql = "SELECT COUNT(*) FROM Faults";
                 using (var cmd = new SQLiteCommand(countSql, conn))
                 {
@@ -54,9 +54,7 @@ namespace MetroBakimTakip
             }
         }
 
-        // -------------------------
-        // CRUD & Filtreleme Olaylari
-        // -------------------------
+        // --------------- CRUD ----------------
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -90,7 +88,7 @@ namespace MetroBakimTakip
                 return;
             }
 
-            int id = Convert.ToInt32(dgvRecords.SelectedRows[0].Cells["FaultID"].Value);
+            int id = Convert.ToInt32(dgvRecords.SelectedRows[0].Cells["Id"].Value);
             using (var conn = new SQLiteConnection(ConnectionString))
             {
                 conn.Open();
@@ -101,7 +99,7 @@ namespace MetroBakimTakip
                         Description = @desc,
                         Date        = @date,
                         Time        = @time
-                    WHERE FaultID = @id";
+                    WHERE Id = @id";
                 using (var cmd = new SQLiteCommand(update, conn))
                 {
                     cmd.Parameters.AddWithValue("@station", txtStationName.Text);
@@ -125,11 +123,11 @@ namespace MetroBakimTakip
                 return;
             }
 
-            int id = Convert.ToInt32(dgvRecords.SelectedRows[0].Cells["FaultID"].Value);
+            int id = Convert.ToInt32(dgvRecords.SelectedRows[0].Cells["Id"].Value);
             using (var conn = new SQLiteConnection(ConnectionString))
             {
                 conn.Open();
-                string delete = "DELETE FROM Faults WHERE FaultID = @id";
+                string delete = "DELETE FROM Faults WHERE Id = @id";
                 using (var cmd = new SQLiteCommand(delete, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", id);
@@ -140,16 +138,19 @@ namespace MetroBakimTakip
             LoadRecords();
         }
 
+        // -------------- Filtreleme --------------
+
         private void btnFilter_Click(object sender, EventArgs e)
         {
-            var start = dtpStart.Value.Date.ToString("yyyy-MM-dd");
-            var end = dtpEnd.Value.Date.ToString("yyyy-MM-dd");
+            string start = dtpStart.Value.ToString("yyyy-MM-dd");
+            string end = dtpEnd.Value.ToString("yyyy-MM-dd");
 
             using (var conn = new SQLiteConnection(ConnectionString))
             {
                 conn.Open();
                 string filterSql = @"
-                    SELECT FaultID, StationName, Title, Description, Date, Time
+                    SELECT 
+                        Id, StationName, Title, Description, Date, Time
                     FROM Faults
                     WHERE Date BETWEEN @start AND @end";
                 var adapter = new SQLiteDataAdapter(filterSql, conn);
@@ -160,19 +161,18 @@ namespace MetroBakimTakip
                 adapter.Fill(dt);
                 dgvRecords.DataSource = dt;
 
-                // Filtre sonrası, DataTable.Rows.Count ile sayaci güncelle
+                // Filtreli sonuç sayısı
                 lblTotalRecords.Text = $"Toplam Kayıt: {dt.Rows.Count}";
             }
         }
 
-        // -------------------------
-        // DataGridView Satır Seçimi
-        // -------------------------
+        // ----------- Satır seçimi -----------
 
         private void dgvRecords_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
             var row = dgvRecords.Rows[e.RowIndex];
+
             txtStationName.Text = row.Cells["StationName"].Value.ToString();
             txtTitle.Text = row.Cells["Title"].Value.ToString();
             txtDescription.Text = row.Cells["Description"].Value.ToString();
@@ -180,9 +180,7 @@ namespace MetroBakimTakip
             dtpTime.Value = Convert.ToDateTime(row.Cells["Time"].Value);
         }
 
-        // -------------------------
-        // Yedekleme (Backup) Butonu
-        // -------------------------
+        // ---------- Yedekleme ------------
 
         private void yedekleme_button_Click(object sender, EventArgs e)
         {
@@ -197,20 +195,18 @@ namespace MetroBakimTakip
             }
         }
 
-        // -------------------------
-        // PDF Dışa Aktarma
-        // -------------------------
+        // ---------- PDF Dışa Aktar ----------
 
         private void btnExportPDF_Click(object sender, EventArgs e)
         {
-            var start = dtpStart.Value.Date;
-            var end = dtpEnd.Value.Date;
+            var start = dtpStart.Value;
+            var end = dtpEnd.Value;
             ExportToPDF(start, end);
         }
 
         private void ExportToPDF(DateTime startDate, DateTime endDate)
         {
-            using (var sfd = new SaveFileDialog() { Filter = "PDF Dosyası|*.pdf", FileName = "Ariza_Kayitlari.pdf" })
+            using (var sfd = new SaveFileDialog { Filter = "PDF Dosyası|*.pdf", FileName = "Ariza_Kayitlari.pdf" })
             {
                 if (sfd.ShowDialog() != DialogResult.OK) return;
                 using (var writer = new PdfWriter(sfd.FileName))
