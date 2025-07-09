@@ -16,10 +16,7 @@ namespace MetroBakimTakip
         }
 
         // Form yüklendiğinde verileri getir
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            LoadRecords();
-        }
+      
 
         // Kayıt ekleme
         private void btnSave_Click(object sender, EventArgs e)
@@ -301,6 +298,33 @@ namespace MetroBakimTakip
             DateTime endDate = dtpEnd.Value;
 
             ExportToPDF(startDate, endDate); // PDF dışa aktarma işlemi
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+            string connectionString = "Data Source=metro.db;Version=3;";
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                // 1) Kayıtları al ve DataGridView'e yükle
+                string query = "SELECT * FROM Faults";
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, connection);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                dgvRecords.DataSource = dt;
+
+                // 2) Toplam kayıt sayısını al
+                string countQuery = "SELECT COUNT(*) FROM Faults";
+                using (SQLiteCommand countCmd = new SQLiteCommand(countQuery, connection))
+                {
+                    int total = Convert.ToInt32(countCmd.ExecuteScalar());
+                    lblTotalRecords.Text = $"Toplam Kayıt: {total}";
+                }
+
+                connection.Close();
+            }
         }
     }
 }

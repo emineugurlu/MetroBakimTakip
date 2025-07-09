@@ -41,6 +41,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.lblTotalRecords = new System.Windows.Forms.Label();
+            this.lblTotalRecordss = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -162,7 +164,7 @@
             // 
             this.dgvRecords.BackgroundColor = System.Drawing.Color.Silver;
             this.dgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRecords.Location = new System.Drawing.Point(902, 357);
+            this.dgvRecords.Location = new System.Drawing.Point(903, 349);
             this.dgvRecords.Name = "dgvRecords";
             this.dgvRecords.RowHeadersWidth = 51;
             this.dgvRecords.RowTemplate.Height = 24;
@@ -247,7 +249,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft YaHei", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label4.ForeColor = System.Drawing.Color.DarkBlue;
-            this.label4.Location = new System.Drawing.Point(514, 33);
+            this.label4.Location = new System.Drawing.Point(509, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(397, 37);
             this.label4.TabIndex = 21;
@@ -287,12 +289,33 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // lblTotalRecords
+            // 
+            this.lblTotalRecords.Location = new System.Drawing.Point(0, 0);
+            this.lblTotalRecords.Name = "lblTotalRecords";
+            this.lblTotalRecords.Size = new System.Drawing.Size(100, 23);
+            this.lblTotalRecords.TabIndex = 27;
+            // 
+            // lblTotalRecordss
+            // 
+            this.lblTotalRecordss.AutoSize = true;
+            this.lblTotalRecordss.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTotalRecordss.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblTotalRecordss.Location = new System.Drawing.Point(899, 620);
+            this.lblTotalRecordss.Name = "lblTotalRecordss";
+            this.lblTotalRecordss.Size = new System.Drawing.Size(134, 24);
+            this.lblTotalRecordss.TabIndex = 26;
+            this.lblTotalRecordss.Text = "Toplam Kayıt :";
+            this.lblTotalRecordss.Click += new System.EventHandler(this.label7_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MistyRose;
-            this.ClientSize = new System.Drawing.Size(1465, 625);
+            this.ClientSize = new System.Drawing.Size(1465, 698);
+            this.Controls.Add(this.lblTotalRecordss);
+            this.Controls.Add(this.lblTotalRecords);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -319,7 +342,6 @@
             this.Controls.Add(this.lblStationName);
             this.Name = "Form1";
             this.Text = "Metro Bakım Takip";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -352,5 +374,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lblTotalRecords;
+        private System.Windows.Forms.Label lblTotalRecordss;
     }
 }
