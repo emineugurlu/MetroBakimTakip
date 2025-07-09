@@ -1,13 +1,14 @@
-﻿using System;
+﻿using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
 
 namespace MetroBakimTakip
 {
@@ -21,10 +22,9 @@ namespace MetroBakimTakip
             InitializeComponent();
             this.Load += Form1_Load;
 
-            // Yeni eklenecek kontrollerin olaylarını bağla
+            // Olay bağlamaları
             this.textsearch.TextChanged += TxtSearch_TextChanged;
             this.btnExportExcel.Click += BtnExportExcel_Click;
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -33,10 +33,13 @@ namespace MetroBakimTakip
         }
 
         // ------------------------------------------------
-        // Kayıtları VeriGridView'e yükler ve sayacı günceller
+        // Kayıtları DataGridView'e yükler, Risk Skoru ekler ve sayacı günceller
         // ------------------------------------------------
         private void LoadRecords()
         {
+            DataTable dt = new DataTable();
+            var riskDict = new Dictionary<string, int>();
+
             using (var conn = new SQLiteConnection(ConnectionString))
             {
                 conn.Open();
@@ -47,33 +50,56 @@ namespace MetroBakimTakip
                         Id, StationName, Title, Description, Date, Time 
                     FROM Faults";
                 var adapter = new SQLiteDataAdapter(sql, conn);
-                var dt = new DataTable();
                 adapter.Fill(dt);
 
-                // Eğer arama kutusunda metin varsa, hemen filtre uygula
-                if (!string.IsNullOrEmpty(textsearch.Text))
+                // 2) Son 7 gündeki arıza sayısını istasyona göre grupla
+                using (var cmd = new SQLiteCommand(
+                    "SELECT StationName, COUNT(*) AS C " +
+                    "FROM Faults " +
+                    "WHERE Date >= date('now','-7 days') " +
+                    "GROUP BY StationName", conn))
+                using (var reader = cmd.ExecuteReader())
                 {
-                    var dv = dt.DefaultView;
-                    dv.RowFilter = $"StationName LIKE '%{textsearch.Text.Replace("'", "''")}%'";
-                    dgvRecords.DataSource = dv.ToTable();
+                    while (reader.Read())
+                    {
+                        var station = reader.GetString(0);
+                        var count = Convert.ToInt32(reader["C"]);
+                        riskDict[station] = count;
+                    }
                 }
-                else
-                {
-                    dgvRecords.DataSource = dt;
-                }
+            }
 
-                // 2) Toplam kayıt sayısı (DataGridView’de görünen satır sayısı)
-                int visibleCount = (dgvRecords.DataSource as DataTable)?.Rows.Count ?? 0;
-                lblTotalRecords.Text = $"Toplam Kayıt: {visibleCount}";
+            // 3) DataTable'a RiskScore sütunu ekle (eğer yoksa)
+            if (!dt.Columns.Contains("RiskScore"))
+                dt.Columns.Add("RiskScore", typeof(int));
+
+            // 4) Her satıra istasyonun risk skorunu yaz
+            foreach (DataRow row in dt.Rows)
+            {
+                var station = row["StationName"].ToString();
+                row["RiskScore"] = riskDict.ContainsKey(station) ? riskDict[station] : 0;
+            }
+
+            // 5) Arama filtresi uygulama
+            if (!string.IsNullOrEmpty(textsearch.Text))
+            {
+                var dv = dt.DefaultView;
+                dv.RowFilter = $"StationName LIKE '%{textsearch.Text.Replace("'", "''")}%'";
+                dgvRecords.DataSource = dv.ToTable();
+                lblTotalRecords.Text = $"Toplam Kayıt: {dv.Count}";
+            }
+            else
+            {
+                dgvRecords.DataSource = dt;
+                lblTotalRecords.Text = $"Toplam Kayıt: {dt.Rows.Count}";
             }
         }
 
         // -------------------------
-        // Anlık Arama (TextChanged)
+        // Anlık Arama
         // -------------------------
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
-            // Tekrar LoadRecords çağırıp hem filtre hem sayaçı güncelliyoruz
             LoadRecords();
         }
 
@@ -165,7 +191,6 @@ namespace MetroBakimTakip
 
         private void btnFilter_Click(object sender, EventArgs e)
         {
-            // Tarih filtresi LoadRecords üzerinden değil, kendimiz uygulayıp DataGridView'e basıyoruz
             string start = dtpStart.Value.ToString("yyyy-MM-dd");
             string end = dtpEnd.Value.ToString("yyyy-MM-dd");
 
@@ -184,8 +209,6 @@ namespace MetroBakimTakip
                 var dt = new DataTable();
                 adapter.Fill(dt);
                 dgvRecords.DataSource = dt;
-
-                // Filtre sonrası, DataTable.Rows.Count ile sayaci güncelle
                 lblTotalRecords.Text = $"Toplam Kayıt: {dt.Rows.Count}";
             }
         }
@@ -284,7 +307,6 @@ namespace MetroBakimTakip
         // -------------------------
         private void BtnExportExcel_Click(object sender, EventArgs e)
         {
-            // DataGridView altında bir CSV çıktısı almak için
             if (!(dgvRecords.DataSource is DataTable dt) || dt.Rows.Count == 0)
             {
                 MessageBox.Show("Aktarılacak kayıt bulunamadı.");
@@ -298,60 +320,16 @@ namespace MetroBakimTakip
                 {
                     using (var sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
                     {
-                        // Başlıklar
                         sw.WriteLine(string.Join(",", dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName)));
-
-                        // Satırlar
-                        foreach (DataRow row in dt.Rows)
-                        {
-                            sw.WriteLine(string.Join(",", row.ItemArray.Select(field =>
-                                field.ToString().Contains(",")
-                                    ? $"\"{field.ToString().Replace("\"", "\"\"")}\""
-                                    : field.ToString()
-                            )));
-                        }
-                    }
-                    MessageBox.Show("CSV başarıyla oluşturuldu!");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"CSV aktarımı başarısız: {ex.Message}");
-                }
-            }
-        }
-
-        private void btnExportExcel_Click_1(object sender, EventArgs e)
-        {
-            // DataGridView'in DataSource'u DataTable mı?
-            if (!(dgvRecords.DataSource is DataTable dt) || dt.Rows.Count == 0)
-            {
-                MessageBox.Show("Aktarılacak kayıt bulunamadı.");
-                return;
-            }
-
-            using (var sfd = new SaveFileDialog { Filter = "CSV Dosyası|*.csv", FileName = "Ariza_Kayitlari.csv" })
-            {
-                if (sfd.ShowDialog() != DialogResult.OK) return;
-
-                try
-                {
-                    using (var sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
-                    {
-                        // 1) Başlık satırı
-                        sw.WriteLine(string.Join(",", dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName)));
-
-                        // 2) Her bir satırı döndür
                         foreach (DataRow row in dt.Rows)
                         {
                             sw.WriteLine(string.Join(",", row.ItemArray.Select(field =>
                             {
                                 var text = field.ToString();
-                                // Virgül içeriyorsa tırnak içine al
                                 if (text.Contains(",") || text.Contains("\""))
                                     text = $"\"{text.Replace("\"", "\"\"")}\"";
                                 return text;
-                            }
-                            )));
+                            })));
                         }
                     }
                     MessageBox.Show("CSV başarıyla oluşturuldu!");
@@ -363,5 +341,4 @@ namespace MetroBakimTakip
             }
         }
     }
-    
 }

@@ -318,7 +318,7 @@
             this.btnExportExcel.TabIndex = 26;
             this.btnExportExcel.Text = "Excel";
             this.btnExportExcel.UseVisualStyleBackColor = true;
-            this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click_1);
+            
             // 
             // Form1
             // 
