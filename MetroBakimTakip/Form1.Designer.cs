@@ -40,6 +40,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -209,7 +210,7 @@
             // 
             this.btnFilter.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnFilter.ForeColor = System.Drawing.Color.DarkBlue;
-            this.btnFilter.Location = new System.Drawing.Point(771, 464);
+            this.btnFilter.Location = new System.Drawing.Point(774, 475);
             this.btnFilter.Name = "btnFilter";
             this.btnFilter.Size = new System.Drawing.Size(109, 30);
             this.btnFilter.TabIndex = 17;
@@ -221,7 +222,7 @@
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnDelete.ForeColor = System.Drawing.Color.Red;
-            this.btnDelete.Location = new System.Drawing.Point(771, 406);
+            this.btnDelete.Location = new System.Drawing.Point(771, 366);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(109, 30);
             this.btnDelete.TabIndex = 19;
@@ -233,7 +234,7 @@
             // 
             this.yedekleme_button.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.yedekleme_button.ForeColor = System.Drawing.Color.Red;
-            this.yedekleme_button.Location = new System.Drawing.Point(771, 522);
+            this.yedekleme_button.Location = new System.Drawing.Point(771, 417);
             this.yedekleme_button.Name = "yedekleme_button";
             this.yedekleme_button.Size = new System.Drawing.Size(112, 33);
             this.yedekleme_button.TabIndex = 20;
@@ -251,7 +252,7 @@
             this.label4.Size = new System.Drawing.Size(397, 37);
             this.label4.TabIndex = 21;
             this.label4.Text = "Metro Bakım Takip Sistemi";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+           
             // 
             // label5
             // 
@@ -275,12 +276,25 @@
             this.label6.TabIndex = 23;
             this.label6.Text = "Sistem Kayıt Yönetimi";
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button1.ForeColor = System.Drawing.Color.DarkBlue;
+            this.button1.Location = new System.Drawing.Point(774, 527);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(106, 31);
+            this.button1.TabIndex = 24;
+            this.button1.Text = "PDF ";
+            this.button1.UseVisualStyleBackColor = true;
+           
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MistyRose;
             this.ClientSize = new System.Drawing.Size(1465, 625);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -338,5 +352,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button button1;
     }
 }

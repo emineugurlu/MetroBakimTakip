@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SQLite;
-using System.IO;  // File.Copy kullanabilmek için
+using System.IO;
+using System.Windows.Forms;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
 
 namespace MetroBakimTakip
 {
@@ -218,16 +214,88 @@ namespace MetroBakimTakip
         }
 
         // Yedekle butonuna tıklandığında
-
-
         private void yedekleme_button_Click(object sender, EventArgs e)
         {
             BackupDatabase();  // Yedekleme işlemini başlat
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        // PDF dışa aktarma işlemi
+        private void ExportToPDF(DateTime startDate, DateTime endDate)
         {
+            string connectionString = "Data Source=metro.db;Version=3;";
 
+            // SaveFileDialog ile dosya kaydetme yolu belirleme
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PDF Dosyası|*.pdf";
+            saveFileDialog.Title = "PDF Kaydet";
+            saveFileDialog.FileName = "Ariza_Kayitlari.pdf";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string savePath = saveFileDialog.FileName;
+
+                // PDF belgesini oluştur
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    PdfWriter writer = new PdfWriter(savePath); // Dosya kaydetme yolunu belirle
+                    PdfDocument pdf = new PdfDocument(writer);
+                    Document document = new Document(pdf);
+
+                    // Başlık
+                    document.Add(new Paragraph("Metro Bakım Takip Sistemi\n\n").SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
+
+                    // Tablo başlıkları
+                    Table table = new Table(5);
+                    table.AddCell("İstasyon Adı");
+                    table.AddCell("Arıza Başlığı");
+                    table.AddCell("Açıklama");
+                    table.AddCell("Tarih");
+                    table.AddCell("Saat");
+
+                    // Veritabanından verileri al
+                    using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        string query = "SELECT * FROM Faults WHERE Date BETWEEN @start AND @end";
+                        SQLiteCommand command = new SQLiteCommand(query, connection);
+                        command.Parameters.AddWithValue("@start", startDate.ToString("yyyy-MM-dd"));
+                        command.Parameters.AddWithValue("@end", endDate.ToString("yyyy-MM-dd"));
+
+                        SQLiteDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            table.AddCell(reader["StationName"].ToString());
+                            table.AddCell(reader["Title"].ToString());
+                            table.AddCell(reader["Description"].ToString());
+                            table.AddCell(reader["Date"].ToString());
+                            table.AddCell(reader["Time"].ToString());
+                        }
+
+                        connection.Close();
+                    }
+
+                    // Tabloyu PDF'ye ekle
+                    document.Add(table);
+
+                    // PDF'i dosyaya kaydet
+                    document.Close();
+                }
+
+                MessageBox.Show("PDF başarıyla oluşturuldu!");
+            }
+            else
+            {
+                MessageBox.Show("Dosya kaydetme işlemi iptal edildi.");
+            }
+        }
+
+        private void btnExportPDF_Click(object sender, EventArgs e)
+        {
+            DateTime startDate = dtpStart.Value;
+            DateTime endDate = dtpEnd.Value;
+
+            ExportToPDF(startDate, endDate); // PDF dışa aktarma işlemi
         }
     }
 }
