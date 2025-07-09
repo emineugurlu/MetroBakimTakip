@@ -41,6 +41,8 @@
             this.lblSection2 = new System.Windows.Forms.Label();
             this.btnExportPDF = new System.Windows.Forms.Button();
             this.lblTotalRecords = new System.Windows.Forms.Label();
+            this.textsearch = new System.Windows.Forms.TextBox();
+            this.lblSearch = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,7 +53,8 @@
             this.lblStationName.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblStationName.Location = new System.Drawing.Point(11, 217);
             this.lblStationName.Name = "lblStationName";
-            this.lblStationName.Size = new System.Drawing.Size(109, 19);
+            this.lblStationName.Size = new System.Drawing.Size(125, 19);
+            this.lblStationName.TabIndex = 23;
             this.lblStationName.Text = "İstasyon Adı     :";
             // 
             // txtStationName
@@ -59,6 +62,7 @@
             this.txtStationName.Location = new System.Drawing.Point(137, 217);
             this.txtStationName.Name = "txtStationName";
             this.txtStationName.Size = new System.Drawing.Size(190, 22);
+            this.txtStationName.TabIndex = 22;
             // 
             // lblTitle
             // 
@@ -67,7 +71,8 @@
             this.lblTitle.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblTitle.Location = new System.Drawing.Point(11, 271);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(107, 19);
+            this.lblTitle.Size = new System.Drawing.Size(119, 19);
+            this.lblTitle.TabIndex = 21;
             this.lblTitle.Text = "Arıza Başlığı    :";
             // 
             // txtTitle
@@ -75,6 +80,7 @@
             this.txtTitle.Location = new System.Drawing.Point(137, 274);
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(190, 22);
+            this.txtTitle.TabIndex = 20;
             // 
             // lblDescription
             // 
@@ -83,7 +89,8 @@
             this.lblDescription.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblDescription.Location = new System.Drawing.Point(11, 323);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(106, 19);
+            this.lblDescription.Size = new System.Drawing.Size(118, 19);
+            this.lblDescription.TabIndex = 19;
             this.lblDescription.Text = "Açıklama         :";
             // 
             // txtDescription
@@ -91,20 +98,23 @@
             this.txtDescription.Location = new System.Drawing.Point(137, 323);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(190, 22);
+            this.txtDescription.TabIndex = 18;
             // 
             // dtpDate
             // 
             this.dtpDate.Location = new System.Drawing.Point(137, 369);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(190, 22);
+            this.dtpDate.TabIndex = 17;
             // 
             // dtpTime
             // 
             this.dtpTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtpTime.ShowUpDown = true;
             this.dtpTime.Location = new System.Drawing.Point(137, 417);
             this.dtpTime.Name = "dtpTime";
+            this.dtpTime.ShowUpDown = true;
             this.dtpTime.Size = new System.Drawing.Size(190, 22);
+            this.dtpTime.TabIndex = 16;
             // 
             // lblDate
             // 
@@ -113,7 +123,8 @@
             this.lblDate.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblDate.Location = new System.Drawing.Point(11, 372);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(103, 19);
+            this.lblDate.Size = new System.Drawing.Size(99, 19);
+            this.lblDate.TabIndex = 15;
             this.lblDate.Text = "Tarih            :";
             // 
             // lblTime
@@ -123,7 +134,8 @@
             this.lblTime.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblTime.Location = new System.Drawing.Point(11, 417);
             this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(102, 19);
+            this.lblTime.Size = new System.Drawing.Size(98, 19);
+            this.lblTime.TabIndex = 14;
             this.lblTime.Text = "Saat             :";
             // 
             // btnSave
@@ -133,6 +145,7 @@
             this.btnSave.Location = new System.Drawing.Point(50, 475);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(119, 36);
+            this.btnSave.TabIndex = 13;
             this.btnSave.Text = "Kaydet";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -141,33 +154,37 @@
             // 
             this.dgvRecords.BackgroundColor = System.Drawing.Color.Silver;
             this.dgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRecords.Location = new System.Drawing.Point(903, 349);
+            this.dgvRecords.Location = new System.Drawing.Point(907, 323);
             this.dgvRecords.Name = "dgvRecords";
             this.dgvRecords.RowHeadersWidth = 51;
             this.dgvRecords.RowTemplate.Height = 24;
             this.dgvRecords.Size = new System.Drawing.Size(464, 237);
+            this.dgvRecords.TabIndex = 12;
             this.dgvRecords.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRecords_CellClick);
             // 
             // dtpStart
             // 
-            this.dtpStart.Location = new System.Drawing.Point(1107, 249);
+            this.dtpStart.Location = new System.Drawing.Point(976, 220);
             this.dtpStart.Name = "dtpStart";
             this.dtpStart.Size = new System.Drawing.Size(200, 22);
+            this.dtpStart.TabIndex = 11;
             // 
             // dtpEnd
             // 
-            this.dtpEnd.Location = new System.Drawing.Point(1107, 296);
+            this.dtpEnd.Location = new System.Drawing.Point(976, 274);
             this.dtpEnd.Name = "dtpEnd";
             this.dtpEnd.Size = new System.Drawing.Size(200, 22);
+            this.dtpEnd.TabIndex = 10;
             // 
             // lblStart
             // 
             this.lblStart.AutoSize = true;
             this.lblStart.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.lblStart.ForeColor = System.Drawing.Color.DarkBlue;
-            this.lblStart.Location = new System.Drawing.Point(928, 252);
+            this.lblStart.Location = new System.Drawing.Point(787, 220);
             this.lblStart.Name = "lblStart";
             this.lblStart.Size = new System.Drawing.Size(134, 19);
+            this.lblStart.TabIndex = 9;
             this.lblStart.Text = "Başlangıç Tarihi :";
             // 
             // lblEnd
@@ -175,18 +192,20 @@
             this.lblEnd.AutoSize = true;
             this.lblEnd.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.lblEnd.ForeColor = System.Drawing.Color.DarkBlue;
-            this.lblEnd.Location = new System.Drawing.Point(928, 296);
+            this.lblEnd.Location = new System.Drawing.Point(787, 271);
             this.lblEnd.Name = "lblEnd";
-            this.lblEnd.Size = new System.Drawing.Size(134, 19);
+            this.lblEnd.Size = new System.Drawing.Size(114, 19);
+            this.lblEnd.TabIndex = 8;
             this.lblEnd.Text = "Bitiş Tarihi      :";
             // 
             // btnFilter
             // 
             this.btnFilter.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
             this.btnFilter.ForeColor = System.Drawing.Color.DarkBlue;
-            this.btnFilter.Location = new System.Drawing.Point(774, 475);
+            this.btnFilter.Location = new System.Drawing.Point(768, 463);
             this.btnFilter.Name = "btnFilter";
             this.btnFilter.Size = new System.Drawing.Size(109, 30);
+            this.btnFilter.TabIndex = 7;
             this.btnFilter.Text = "Filtrele";
             this.btnFilter.UseVisualStyleBackColor = true;
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
@@ -195,9 +214,10 @@
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
             this.btnDelete.ForeColor = System.Drawing.Color.Red;
-            this.btnDelete.Location = new System.Drawing.Point(771, 366);
+            this.btnDelete.Location = new System.Drawing.Point(771, 337);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(109, 30);
+            this.btnDelete.TabIndex = 6;
             this.btnDelete.Text = "Sil";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -206,9 +226,10 @@
             // 
             this.btnBackup.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
             this.btnBackup.ForeColor = System.Drawing.Color.Red;
-            this.btnBackup.Location = new System.Drawing.Point(771, 417);
+            this.btnBackup.Location = new System.Drawing.Point(768, 403);
             this.btnBackup.Name = "btnBackup";
             this.btnBackup.Size = new System.Drawing.Size(112, 33);
+            this.btnBackup.TabIndex = 5;
             this.btnBackup.Text = "Yedekle";
             this.btnBackup.UseVisualStyleBackColor = true;
             this.btnBackup.Click += new System.EventHandler(this.yedekleme_button_Click);
@@ -218,9 +239,10 @@
             this.lblHeader.AutoSize = true;
             this.lblHeader.Font = new System.Drawing.Font("Microsoft YaHei", 16.2F, System.Drawing.FontStyle.Bold);
             this.lblHeader.ForeColor = System.Drawing.Color.DarkBlue;
-            this.lblHeader.Location = new System.Drawing.Point(509, 9);
+            this.lblHeader.Location = new System.Drawing.Point(557, 9);
             this.lblHeader.Name = "lblHeader";
             this.lblHeader.Size = new System.Drawing.Size(397, 37);
+            this.lblHeader.TabIndex = 4;
             this.lblHeader.Text = "Metro Bakım Takip Sistemi";
             // 
             // lblSection1
@@ -231,6 +253,7 @@
             this.lblSection1.Location = new System.Drawing.Point(72, 124);
             this.lblSection1.Name = "lblSection1";
             this.lblSection1.Size = new System.Drawing.Size(195, 24);
+            this.lblSection1.TabIndex = 3;
             this.lblSection1.Text = "Bakım Kayıt Yönetimi";
             // 
             // lblSection2
@@ -238,18 +261,20 @@
             this.lblSection2.AutoSize = true;
             this.lblSection2.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
             this.lblSection2.ForeColor = System.Drawing.Color.DarkBlue;
-            this.lblSection2.Location = new System.Drawing.Point(1008, 124);
+            this.lblSection2.Location = new System.Drawing.Point(849, 124);
             this.lblSection2.Name = "lblSection2";
             this.lblSection2.Size = new System.Drawing.Size(198, 24);
+            this.lblSection2.TabIndex = 2;
             this.lblSection2.Text = "Sistem Kayıt Yönetimi";
             // 
             // btnExportPDF
             // 
             this.btnExportPDF.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
             this.btnExportPDF.ForeColor = System.Drawing.Color.DarkBlue;
-            this.btnExportPDF.Location = new System.Drawing.Point(774, 527);
+            this.btnExportPDF.Location = new System.Drawing.Point(771, 520);
             this.btnExportPDF.Name = "btnExportPDF";
             this.btnExportPDF.Size = new System.Drawing.Size(106, 31);
+            this.btnExportPDF.TabIndex = 1;
             this.btnExportPDF.Text = "PDF";
             this.btnExportPDF.UseVisualStyleBackColor = true;
             this.btnExportPDF.Click += new System.EventHandler(this.btnExportPDF_Click);
@@ -259,17 +284,38 @@
             this.lblTotalRecords.AutoSize = true;
             this.lblTotalRecords.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
             this.lblTotalRecords.ForeColor = System.Drawing.Color.DarkBlue;
-            this.lblTotalRecords.Location = new System.Drawing.Point(903, 600);
+            this.lblTotalRecords.Location = new System.Drawing.Point(903, 586);
             this.lblTotalRecords.Name = "lblTotalRecords";
-            this.lblTotalRecords.Size = new System.Drawing.Size(150, 24);
+            this.lblTotalRecords.Size = new System.Drawing.Size(144, 24);
+            this.lblTotalRecords.TabIndex = 0;
             this.lblTotalRecords.Text = "Toplam Kayıt: 0";
+            // 
+            // textsearch
+            // 
+            this.textsearch.Location = new System.Drawing.Point(1334, 72);
+            this.textsearch.Name = "textsearch";
+            this.textsearch.Size = new System.Drawing.Size(190, 22);
+            this.textsearch.TabIndex = 24;
+            // 
+            // lblSearch
+            // 
+            this.lblSearch.AutoSize = true;
+            this.lblSearch.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblSearch.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblSearch.Location = new System.Drawing.Point(1172, 72);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(140, 24);
+            this.lblSearch.TabIndex = 25;
+            this.lblSearch.Text = "Ara (İstasyon) :";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MistyRose;
-            this.ClientSize = new System.Drawing.Size(1465, 698);
+            this.ClientSize = new System.Drawing.Size(1572, 718);
+            this.Controls.Add(this.lblSearch);
+            this.Controls.Add(this.textsearch);
             this.Controls.Add(this.lblTotalRecords);
             this.Controls.Add(this.btnExportPDF);
             this.Controls.Add(this.lblSection2);
@@ -299,6 +345,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
@@ -327,5 +374,7 @@
         private System.Windows.Forms.Label lblSection2;
         private System.Windows.Forms.Button btnExportPDF;
         private System.Windows.Forms.Label lblTotalRecords;
+        private System.Windows.Forms.TextBox textsearch;
+        private System.Windows.Forms.Label lblSearch;
     }
 }
