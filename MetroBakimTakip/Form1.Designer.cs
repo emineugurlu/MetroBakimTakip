@@ -36,6 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnFilter = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.yedekleme_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,7 +48,6 @@
             this.lblStationName.Size = new System.Drawing.Size(83, 16);
             this.lblStationName.TabIndex = 0;
             this.lblStationName.Text = "İstasyon Adı:";
-            this.lblStationName.Click += new System.EventHandler(this.label1_Click);
             // 
             // txtStationName
             // 
@@ -182,7 +182,6 @@
             this.label3.Size = new System.Drawing.Size(75, 16);
             this.label3.TabIndex = 16;
             this.label3.Text = "Bitiş Tarihi :";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // btnFilter
             // 
@@ -204,11 +203,22 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // yedekleme_button
+            // 
+            this.yedekleme_button.Location = new System.Drawing.Point(625, 290);
+            this.yedekleme_button.Name = "yedekleme_button";
+            this.yedekleme_button.Size = new System.Drawing.Size(75, 23);
+            this.yedekleme_button.TabIndex = 20;
+            this.yedekleme_button.Text = "Yedekleme";
+            this.yedekleme_button.UseVisualStyleBackColor = true;
+            this.yedekleme_button.Click += new System.EventHandler(this.yedekleme_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1381, 483);
+            this.Controls.Add(this.yedekleme_button);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnFilter);
             this.Controls.Add(this.label3);
@@ -258,5 +268,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnFilter;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button yedekleme_button;
     }
 }
