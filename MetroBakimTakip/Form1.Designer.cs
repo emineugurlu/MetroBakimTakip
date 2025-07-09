@@ -252,7 +252,6 @@
             this.label4.Size = new System.Drawing.Size(397, 37);
             this.label4.TabIndex = 21;
             this.label4.Text = "Metro Bakım Takip Sistemi";
-           
             // 
             // label5
             // 
@@ -286,7 +285,7 @@
             this.button1.TabIndex = 24;
             this.button1.Text = "PDF ";
             this.button1.UseVisualStyleBackColor = true;
-           
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 

@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
-
 namespace MetroBakimTakip
 {
     public partial class Form1 : Form
@@ -220,6 +219,7 @@ namespace MetroBakimTakip
         }
 
         // PDF dışa aktarma işlemi
+        // PDF dışa aktarma işlemi
         private void ExportToPDF(DateTime startDate, DateTime endDate)
         {
             string connectionString = "Data Source=metro.db;Version=3;";
@@ -237,12 +237,14 @@ namespace MetroBakimTakip
                 // PDF belgesini oluştur
                 using (MemoryStream ms = new MemoryStream())
                 {
+                    // PdfWriter nesnesini oluştur
                     PdfWriter writer = new PdfWriter(savePath); // Dosya kaydetme yolunu belirle
-                    PdfDocument pdf = new PdfDocument(writer);
-                    Document document = new Document(pdf);
+                    PdfDocument pdf = new PdfDocument(writer); // PDF dosyasını oluştur
+                    Document document = new Document(pdf); // Belgeyi oluştur
 
                     // Başlık
-                    document.Add(new Paragraph("Metro Bakım Takip Sistemi\n\n").SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
+                    document.Add(new Paragraph("Metro Bakım Takip Sistemi\n\n")
+                        .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
 
                     // Tablo başlıkları
                     Table table = new Table(5);
@@ -265,6 +267,7 @@ namespace MetroBakimTakip
                         SQLiteDataReader reader = command.ExecuteReader();
                         while (reader.Read())
                         {
+                            // Tabloya verileri ekle
                             table.AddCell(reader["StationName"].ToString());
                             table.AddCell(reader["Title"].ToString());
                             table.AddCell(reader["Description"].ToString());
@@ -278,8 +281,8 @@ namespace MetroBakimTakip
                     // Tabloyu PDF'ye ekle
                     document.Add(table);
 
-                    // PDF'i dosyaya kaydet
-                    document.Close();
+                    // PDF'i tamamla ve kaydet
+                    document.Close(); // **PDF'in doğru şekilde kaydedilmesi için Close() fonksiyonu gereklidir**
                 }
 
                 MessageBox.Show("PDF başarıyla oluşturuldu!");
@@ -290,8 +293,10 @@ namespace MetroBakimTakip
             }
         }
 
-        private void btnExportPDF_Click(object sender, EventArgs e)
+
+        private void button1_Click(object sender, EventArgs e)
         {
+
             DateTime startDate = dtpStart.Value;
             DateTime endDate = dtpEnd.Value;
 
