@@ -37,23 +37,30 @@
             this.btnFilter = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.yedekleme_button = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.SuspendLayout();
             // 
             // lblStationName
             // 
             this.lblStationName.AutoSize = true;
-            this.lblStationName.Location = new System.Drawing.Point(35, 49);
+            this.lblStationName.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblStationName.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblStationName.Location = new System.Drawing.Point(11, 217);
             this.lblStationName.Name = "lblStationName";
-            this.lblStationName.Size = new System.Drawing.Size(83, 16);
+            this.lblStationName.Size = new System.Drawing.Size(109, 19);
             this.lblStationName.TabIndex = 0;
-            this.lblStationName.Text = "İstasyon Adı:";
+            this.lblStationName.Text = "İstasyon Adı :";
             // 
             // txtStationName
             // 
-            this.txtStationName.Location = new System.Drawing.Point(158, 46);
+            this.txtStationName.BackColor = System.Drawing.Color.White;
+            this.txtStationName.ForeColor = System.Drawing.Color.IndianRed;
+            this.txtStationName.Location = new System.Drawing.Point(137, 217);
             this.txtStationName.Name = "txtStationName";
-            this.txtStationName.Size = new System.Drawing.Size(100, 22);
+            this.txtStationName.Size = new System.Drawing.Size(190, 22);
             this.txtStationName.TabIndex = 1;
             // 
             // label1
@@ -67,74 +74,84 @@
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(35, 140);
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTitle.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblTitle.Location = new System.Drawing.Point(11, 271);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(81, 16);
+            this.lblTitle.Size = new System.Drawing.Size(107, 19);
             this.lblTitle.TabIndex = 3;
-            this.lblTitle.Text = "Arıza Başlığı";
+            this.lblTitle.Text = "Arıza Başlığı :";
             // 
             // txtTitle
             // 
-            this.txtTitle.Location = new System.Drawing.Point(158, 134);
+            this.txtTitle.Location = new System.Drawing.Point(137, 274);
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(100, 22);
+            this.txtTitle.Size = new System.Drawing.Size(190, 22);
             this.txtTitle.TabIndex = 4;
             // 
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
-            this.lblDescription.Location = new System.Drawing.Point(35, 245);
+            this.lblDescription.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblDescription.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblDescription.Location = new System.Drawing.Point(11, 323);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(66, 16);
+            this.lblDescription.Size = new System.Drawing.Size(106, 19);
             this.lblDescription.TabIndex = 5;
-            this.lblDescription.Text = "Açıklama:";
+            this.lblDescription.Text = "Açıklama      :";
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(158, 229);
+            this.txtDescription.Location = new System.Drawing.Point(137, 323);
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(100, 22);
+            this.txtDescription.Size = new System.Drawing.Size(190, 22);
             this.txtDescription.TabIndex = 6;
             // 
             // dtpDate
             // 
-            this.dtpDate.Location = new System.Drawing.Point(425, 52);
+            this.dtpDate.Location = new System.Drawing.Point(137, 369);
             this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(200, 22);
+            this.dtpDate.Size = new System.Drawing.Size(190, 22);
             this.dtpDate.TabIndex = 7;
             // 
             // dtpTime
             // 
             this.dtpTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtpTime.Location = new System.Drawing.Point(425, 131);
+            this.dtpTime.Location = new System.Drawing.Point(137, 417);
             this.dtpTime.Name = "dtpTime";
             this.dtpTime.ShowUpDown = true;
-            this.dtpTime.Size = new System.Drawing.Size(200, 22);
+            this.dtpTime.Size = new System.Drawing.Size(190, 22);
             this.dtpTime.TabIndex = 8;
             // 
             // lblDate
             // 
             this.lblDate.AutoSize = true;
-            this.lblDate.Location = new System.Drawing.Point(335, 52);
+            this.lblDate.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblDate.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblDate.Location = new System.Drawing.Point(11, 372);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(41, 16);
+            this.lblDate.Size = new System.Drawing.Size(103, 19);
             this.lblDate.TabIndex = 9;
-            this.lblDate.Text = "Tarih:";
+            this.lblDate.Text = "Tarih             :";
             // 
             // lblTime
             // 
             this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(338, 137);
+            this.lblTime.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTime.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblTime.Location = new System.Drawing.Point(11, 417);
             this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(38, 16);
+            this.lblTime.Size = new System.Drawing.Size(102, 19);
             this.lblTime.TabIndex = 10;
-            this.lblTime.Text = "Saat:";
+            this.lblTime.Text = "Saat              :";
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(338, 229);
+            this.btnSave.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnSave.ForeColor = System.Drawing.Color.DarkBlue;
+            this.btnSave.Location = new System.Drawing.Point(50, 475);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(119, 36);
             this.btnSave.TabIndex = 11;
             this.btnSave.Text = "Kaydet";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -142,8 +159,9 @@
             // 
             // dgvRecords
             // 
+            this.dgvRecords.BackgroundColor = System.Drawing.Color.Silver;
             this.dgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRecords.Location = new System.Drawing.Point(843, 214);
+            this.dgvRecords.Location = new System.Drawing.Point(902, 357);
             this.dgvRecords.Name = "dgvRecords";
             this.dgvRecords.RowHeadersWidth = 51;
             this.dgvRecords.RowTemplate.Height = 24;
@@ -153,14 +171,14 @@
             // 
             // dtpStart
             // 
-            this.dtpStart.Location = new System.Drawing.Point(867, 47);
+            this.dtpStart.Location = new System.Drawing.Point(1107, 249);
             this.dtpStart.Name = "dtpStart";
             this.dtpStart.Size = new System.Drawing.Size(200, 22);
             this.dtpStart.TabIndex = 13;
             // 
             // dtpEnd
             // 
-            this.dtpEnd.Location = new System.Drawing.Point(867, 103);
+            this.dtpEnd.Location = new System.Drawing.Point(1107, 296);
             this.dtpEnd.Name = "dtpEnd";
             this.dtpEnd.Size = new System.Drawing.Size(200, 22);
             this.dtpEnd.TabIndex = 14;
@@ -168,26 +186,32 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(743, 49);
+            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label2.ForeColor = System.Drawing.Color.DarkBlue;
+            this.label2.Location = new System.Drawing.Point(928, 252);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(110, 16);
+            this.label2.Size = new System.Drawing.Size(134, 19);
             this.label2.TabIndex = 15;
             this.label2.Text = "Başlangıç Tarihi :";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(743, 109);
+            this.label3.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label3.ForeColor = System.Drawing.Color.DarkBlue;
+            this.label3.Location = new System.Drawing.Point(928, 296);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 16);
+            this.label3.Size = new System.Drawing.Size(134, 19);
             this.label3.TabIndex = 16;
-            this.label3.Text = "Bitiş Tarihi :";
+            this.label3.Text = "Bitiş Tarihi           :";
             // 
             // btnFilter
             // 
-            this.btnFilter.Location = new System.Drawing.Point(818, 160);
+            this.btnFilter.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnFilter.ForeColor = System.Drawing.Color.DarkBlue;
+            this.btnFilter.Location = new System.Drawing.Point(771, 464);
             this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(75, 23);
+            this.btnFilter.Size = new System.Drawing.Size(109, 30);
             this.btnFilter.TabIndex = 17;
             this.btnFilter.Text = "Filtrele";
             this.btnFilter.UseVisualStyleBackColor = true;
@@ -195,9 +219,11 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(513, 228);
+            this.btnDelete.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnDelete.ForeColor = System.Drawing.Color.Red;
+            this.btnDelete.Location = new System.Drawing.Point(771, 406);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.Size = new System.Drawing.Size(109, 30);
             this.btnDelete.TabIndex = 19;
             this.btnDelete.Text = "Sil";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -205,19 +231,59 @@
             // 
             // yedekleme_button
             // 
-            this.yedekleme_button.Location = new System.Drawing.Point(625, 290);
+            this.yedekleme_button.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.yedekleme_button.ForeColor = System.Drawing.Color.Red;
+            this.yedekleme_button.Location = new System.Drawing.Point(771, 522);
             this.yedekleme_button.Name = "yedekleme_button";
-            this.yedekleme_button.Size = new System.Drawing.Size(75, 23);
+            this.yedekleme_button.Size = new System.Drawing.Size(112, 33);
             this.yedekleme_button.TabIndex = 20;
             this.yedekleme_button.Text = "Yedekleme";
             this.yedekleme_button.UseVisualStyleBackColor = true;
             this.yedekleme_button.Click += new System.EventHandler(this.yedekleme_button_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft YaHei", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label4.ForeColor = System.Drawing.Color.DarkBlue;
+            this.label4.Location = new System.Drawing.Point(514, 33);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(397, 37);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "Metro Bakım Takip Sistemi";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label5.ForeColor = System.Drawing.Color.DarkBlue;
+            this.label5.Location = new System.Drawing.Point(72, 124);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(195, 24);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "Bakım Kayıt Yönetimi";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label6.ForeColor = System.Drawing.Color.DarkBlue;
+            this.label6.Location = new System.Drawing.Point(1008, 124);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(198, 24);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "Sistem Kayıt Yönetimi";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1381, 483);
+            this.BackColor = System.Drawing.Color.MistyRose;
+            this.ClientSize = new System.Drawing.Size(1465, 625);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.yedekleme_button);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnFilter);
@@ -269,5 +335,8 @@
         private System.Windows.Forms.Button btnFilter;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button yedekleme_button;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }

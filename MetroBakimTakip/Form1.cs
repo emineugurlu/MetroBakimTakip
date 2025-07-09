@@ -224,5 +224,10 @@ namespace MetroBakimTakip
         {
             BackupDatabase();  // Yedekleme işlemini başlat
         }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
