@@ -23,7 +23,8 @@ namespace MetroBakimTakip
 
             // Yeni eklenecek kontrollerin olaylarını bağla
             this.textsearch.TextChanged += TxtSearch_TextChanged;
-          
+            this.btnExportExcel.Click += BtnExportExcel_Click;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -318,5 +319,49 @@ namespace MetroBakimTakip
                 }
             }
         }
+
+        private void btnExportExcel_Click_1(object sender, EventArgs e)
+        {
+            // DataGridView'in DataSource'u DataTable mı?
+            if (!(dgvRecords.DataSource is DataTable dt) || dt.Rows.Count == 0)
+            {
+                MessageBox.Show("Aktarılacak kayıt bulunamadı.");
+                return;
+            }
+
+            using (var sfd = new SaveFileDialog { Filter = "CSV Dosyası|*.csv", FileName = "Ariza_Kayitlari.csv" })
+            {
+                if (sfd.ShowDialog() != DialogResult.OK) return;
+
+                try
+                {
+                    using (var sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
+                    {
+                        // 1) Başlık satırı
+                        sw.WriteLine(string.Join(",", dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName)));
+
+                        // 2) Her bir satırı döndür
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            sw.WriteLine(string.Join(",", row.ItemArray.Select(field =>
+                            {
+                                var text = field.ToString();
+                                // Virgül içeriyorsa tırnak içine al
+                                if (text.Contains(",") || text.Contains("\""))
+                                    text = $"\"{text.Replace("\"", "\"\"")}\"";
+                                return text;
+                            }
+                            )));
+                        }
+                    }
+                    MessageBox.Show("CSV başarıyla oluşturuldu!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"CSV aktarımı başarısız: {ex.Message}");
+                }
+            }
+        }
     }
+    
 }
