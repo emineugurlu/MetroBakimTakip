@@ -44,6 +44,8 @@
             this.textsearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
             this.btnExportExcel = new System.Windows.Forms.Button();
+            this.btnPredict = new System.Windows.Forms.Button();
+            this.btnTrain = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -240,7 +242,7 @@
             this.lblHeader.AutoSize = true;
             this.lblHeader.Font = new System.Drawing.Font("Microsoft YaHei", 16.2F, System.Drawing.FontStyle.Bold);
             this.lblHeader.ForeColor = System.Drawing.Color.DarkBlue;
-            this.lblHeader.Location = new System.Drawing.Point(627, 9);
+            this.lblHeader.Location = new System.Drawing.Point(508, 9);
             this.lblHeader.Name = "lblHeader";
             this.lblHeader.Size = new System.Drawing.Size(397, 37);
             this.lblHeader.TabIndex = 4;
@@ -318,7 +320,26 @@
             this.btnExportExcel.TabIndex = 26;
             this.btnExportExcel.Text = "Excel";
             this.btnExportExcel.UseVisualStyleBackColor = true;
-            
+            // 
+            // btnPredict
+            // 
+            this.btnPredict.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnPredict.Location = new System.Drawing.Point(56, 538);
+            this.btnPredict.Name = "btnPredict";
+            this.btnPredict.Size = new System.Drawing.Size(134, 34);
+            this.btnPredict.TabIndex = 27;
+            this.btnPredict.Text = "Öngörü";
+            this.btnPredict.UseVisualStyleBackColor = true;
+            // 
+            // btnTrain
+            // 
+            this.btnTrain.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnTrain.Location = new System.Drawing.Point(56, 602);
+            this.btnTrain.Name = "btnTrain";
+            this.btnTrain.Size = new System.Drawing.Size(134, 31);
+            this.btnTrain.TabIndex = 28;
+            this.btnTrain.Text = "Train";
+            this.btnTrain.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -326,6 +347,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MistyRose;
             this.ClientSize = new System.Drawing.Size(1338, 718);
+            this.Controls.Add(this.btnTrain);
+            this.Controls.Add(this.btnPredict);
             this.Controls.Add(this.btnExportExcel);
             this.Controls.Add(this.lblSearch);
             this.Controls.Add(this.textsearch);
@@ -392,5 +415,7 @@
         private System.Windows.Forms.TextBox textsearch;
         private System.Windows.Forms.Label lblSearch;
         private System.Windows.Forms.Button btnExportExcel;
+        private System.Windows.Forms.Button btnPredict;
+        private System.Windows.Forms.Button btnTrain;
     }
 }
