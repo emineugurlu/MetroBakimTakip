@@ -46,6 +46,7 @@
             this.btnExportExcel = new System.Windows.Forms.Button();
             this.btnPredict = new System.Windows.Forms.Button();
             this.btnTrain = new System.Windows.Forms.Button();
+            this.btnExportTrainData = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -145,7 +146,7 @@
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
             this.btnSave.ForeColor = System.Drawing.Color.DarkBlue;
-            this.btnSave.Location = new System.Drawing.Point(56, 475);
+            this.btnSave.Location = new System.Drawing.Point(56, 460);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(134, 36);
             this.btnSave.TabIndex = 13;
@@ -235,7 +236,7 @@
             this.btnBackup.TabIndex = 5;
             this.btnBackup.Text = "Yedekle";
             this.btnBackup.UseVisualStyleBackColor = true;
-            this.btnBackup.Click += new System.EventHandler(this.yedekleme_button_Click);
+            
             // 
             // lblHeader
             // 
@@ -324,7 +325,7 @@
             // btnPredict
             // 
             this.btnPredict.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnPredict.Location = new System.Drawing.Point(56, 538);
+            this.btnPredict.Location = new System.Drawing.Point(56, 513);
             this.btnPredict.Name = "btnPredict";
             this.btnPredict.Size = new System.Drawing.Size(134, 34);
             this.btnPredict.TabIndex = 27;
@@ -334,12 +335,22 @@
             // btnTrain
             // 
             this.btnTrain.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnTrain.Location = new System.Drawing.Point(56, 602);
+            this.btnTrain.Location = new System.Drawing.Point(56, 567);
             this.btnTrain.Name = "btnTrain";
             this.btnTrain.Size = new System.Drawing.Size(134, 31);
             this.btnTrain.TabIndex = 28;
             this.btnTrain.Text = "Train";
             this.btnTrain.UseVisualStyleBackColor = true;
+            // 
+            // btnExportTrainData
+            // 
+            this.btnExportTrainData.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnExportTrainData.Location = new System.Drawing.Point(56, 618);
+            this.btnExportTrainData.Name = "btnExportTrainData";
+            this.btnExportTrainData.Size = new System.Drawing.Size(134, 36);
+            this.btnExportTrainData.TabIndex = 29;
+            this.btnExportTrainData.Text = "Eğitim Verisi Yarat";
+            this.btnExportTrainData.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -347,6 +358,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MistyRose;
             this.ClientSize = new System.Drawing.Size(1338, 718);
+            this.Controls.Add(this.btnExportTrainData);
             this.Controls.Add(this.btnTrain);
             this.Controls.Add(this.btnPredict);
             this.Controls.Add(this.btnExportExcel);
@@ -417,5 +429,6 @@
         private System.Windows.Forms.Button btnExportExcel;
         private System.Windows.Forms.Button btnPredict;
         private System.Windows.Forms.Button btnTrain;
+        private System.Windows.Forms.Button btnExportTrainData;
     }
 }

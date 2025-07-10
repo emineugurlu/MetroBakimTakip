@@ -1,37 +1,40 @@
-﻿using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
-using Microsoft.ML;
-using Microsoft.ML.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using Microsoft.ML;
+using Microsoft.ML.Data;
 
 namespace MetroBakimTakip
 {
     public partial class Form1 : Form
     {
         private const string ConnectionString = "Data Source=metro.db;Version=3;";
-        // ML model yolu (Model sınıfları Models.cs içinde)
-        private readonly string _modelPath = "faultModel.zip";
+        private const string ModelFileName = "faultModel.zip";
 
         public Form1()
         {
             InitializeComponent();
-
-            // Form Load
             this.Load += Form1_Load;
-
-            // Koddan bağlamak istediğin event’ler (optional, Designer’da da olabilir)
-            textsearch.TextChanged += TxtSearch_TextChanged;
-            btnExportExcel.Click += BtnExportExcel_Click;
-            btnPredict.Click += BtnPredict_Click;
-            btnTrain.Click += BtnTrain_Click;    // eğer train butonu varsa
+            this.textsearch.TextChanged += TxtSearch_TextChanged;
+            this.btnSave.Click += btnSave_Click;
+            this.btnDelete.Click += btnDelete_Click;
+            this.btnFilter.Click += btnFilter_Click;
+            this.btnBackup.Click += btnBackup_Click;
+            this.btnExportPDF.Click += btnExportPDF_Click;
+            this.btnExportExcel.Click += btnExportExcel_Click;
+            this.btnExportTrainData.Click += btnExportTrainData_Click;
+            this.btnTrain.Click += btnTrain_Click;
+            this.btnPredict.Click += btnPredict_Click;
+            this.dgvRecords.CellClick += dgvRecords_CellClick;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -39,85 +42,85 @@ namespace MetroBakimTakip
             LoadRecords();
         }
 
-        /// <summary>
-        /// DataGridView’i doldurur, RiskScore hesaplar, sayaçı günceller
-        /// </summary>
         private void LoadRecords()
         {
             DataTable dt = new DataTable();
-            var riskDict = new Dictionary<string, int>();
+            Dictionary<string, int> riskDict = new Dictionary<string, int>();
 
-            // 1) DB’den çek
-            using (var conn = new SQLiteConnection(ConnectionString))
+            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
             {
                 conn.Open();
-
-                using (var ad = new SQLiteDataAdapter(
-                    @"SELECT Id, StationName, Title, Description, Date, Time
-                      FROM Faults", conn))
+                // Tüm kayıtları çek
+                using (SQLiteDataAdapter da = new SQLiteDataAdapter(
+                    "SELECT Id,StationName,Title,Description,Date,Time FROM Faults", conn))
                 {
-                    ad.Fill(dt);
+                    da.Fill(dt);
                 }
-
-                // 2) Son 7 gündeki arıza sayısını hesapla
-                using (var cmd = new SQLiteCommand(
-                    @"SELECT StationName, COUNT(*) AS C
-                      FROM Faults
-                      WHERE Date >= date('now','-7 days')
-                      GROUP BY StationName", conn))
-                using (var rdr = cmd.ExecuteReader())
+                // 7 günlük arıza sayısını hesapla
+                using (SQLiteCommand cmd = new SQLiteCommand(
+                    "SELECT StationName, COUNT(*) AS C FROM Faults " +
+                    "WHERE Date >= date('now','-7 days') GROUP BY StationName", conn))
                 {
-                    while (rdr.Read())
-                        riskDict[rdr.GetString(0)] = Convert.ToInt32(rdr["C"]);
+                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            string st = rdr.GetString(0);
+                            int c = Convert.ToInt32(rdr["C"]);
+                            riskDict[st] = c;
+                        }
+                    }
                 }
             }
 
-            // 3) RiskScore sütunu ekle ve doldur
+            // RiskScore sütunu
             if (!dt.Columns.Contains("RiskScore"))
+            {
                 dt.Columns.Add("RiskScore", typeof(int));
+            }
             foreach (DataRow row in dt.Rows)
             {
-                var st = row["StationName"].ToString();
+                string st = row["StationName"].ToString();
                 row["RiskScore"] = riskDict.ContainsKey(st) ? riskDict[st] : 0;
             }
 
-            // 4) Arama filtresi
-            if (!string.IsNullOrEmpty(textsearch.Text))
+            // Arama filtresi
+            if (!string.IsNullOrWhiteSpace(this.textsearch.Text))
             {
-                var dv = dt.DefaultView;
-                dv.RowFilter = $"StationName LIKE '%{textsearch.Text.Replace("'", "''")}%'";
-                dgvRecords.DataSource = dv.ToTable();
-                lblTotalRecords.Text = $"Toplam Kayıt: {dv.Count}";
+                DataView dv = dt.DefaultView;
+                dv.RowFilter = "StationName LIKE '%" +
+                    this.textsearch.Text.Replace("'", "''") + "%'";
+                this.dgvRecords.DataSource = dv.ToTable();
+                this.lblTotalRecords.Text = "Toplam Kayıt: " + dv.Count;
             }
             else
             {
-                dgvRecords.DataSource = dt;
-                lblTotalRecords.Text = $"Toplam Kayıt: {dt.Rows.Count}";
+                this.dgvRecords.DataSource = dt;
+                this.lblTotalRecords.Text = "Toplam Kayıt: " + dt.Rows.Count;
             }
         }
 
-        // Anlık arama
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             LoadRecords();
         }
 
-        // Kaydet
+        // --- CRUD ---
         private void btnSave_Click(object sender, EventArgs e)
         {
-            using (var conn = new SQLiteConnection(ConnectionString))
+            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
             {
                 conn.Open();
-                using (var cmd = new SQLiteCommand(
-                    @"INSERT INTO Faults
-                      (StationName, Title, Description, Date, Time)
-                      VALUES (@st,@ti,@de,@da,@ti2)", conn))
+                using (SQLiteCommand cmd = conn.CreateCommand())
                 {
+                    cmd.CommandText =
+                        "INSERT INTO Faults(StationName,Title,Description,Date,Time) " +
+                        "VALUES(@st,@ti,@de,@da,@tm)";
                     cmd.Parameters.AddWithValue("@st", txtStationName.Text);
                     cmd.Parameters.AddWithValue("@ti", txtTitle.Text);
                     cmd.Parameters.AddWithValue("@de", txtDescription.Text);
                     cmd.Parameters.AddWithValue("@da", dtpDate.Value.ToString("yyyy-MM-dd"));
-                    cmd.Parameters.AddWithValue("@ti2", dtpTime.Value.ToString("HH:mm:ss"));
+                    cmd.Parameters.AddWithValue("@tm", dtpTime.Value.ToString("HH:mm:ss"));
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -125,42 +128,6 @@ namespace MetroBakimTakip
             LoadRecords();
         }
 
-        // Güncelle
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            if (dgvRecords.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Güncellenecek kaydı seçin.");
-                return;
-            }
-
-            int id = Convert.ToInt32(dgvRecords.SelectedRows[0].Cells["Id"].Value);
-            using (var conn = new SQLiteConnection(ConnectionString))
-            {
-                conn.Open();
-                using (var cmd = new SQLiteCommand(
-                    @"UPDATE Faults SET
-                        StationName = @st,
-                        Title       = @ti,
-                        Description = @de,
-                        Date        = @da,
-                        Time        = @ti2
-                      WHERE Id = @id", conn))
-                {
-                    cmd.Parameters.AddWithValue("@st", txtStationName.Text);
-                    cmd.Parameters.AddWithValue("@ti", txtTitle.Text);
-                    cmd.Parameters.AddWithValue("@de", txtDescription.Text);
-                    cmd.Parameters.AddWithValue("@da", dtpDate.Value.ToString("yyyy-MM-dd"));
-                    cmd.Parameters.AddWithValue("@ti2", dtpTime.Value.ToString("HH:mm:ss"));
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            MessageBox.Show("Kayıt güncellendi.");
-            LoadRecords();
-        }
-
-        // Sil
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (dgvRecords.SelectedRows.Count == 0)
@@ -169,11 +136,12 @@ namespace MetroBakimTakip
                 return;
             }
             int id = Convert.ToInt32(dgvRecords.SelectedRows[0].Cells["Id"].Value);
-            using (var conn = new SQLiteConnection(ConnectionString))
+            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
             {
                 conn.Open();
-                using (var cmd = new SQLiteCommand("DELETE FROM Faults WHERE Id=@id", conn))
+                using (SQLiteCommand cmd = conn.CreateCommand())
                 {
+                    cmd.CommandText = "DELETE FROM Faults WHERE Id=@id";
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.ExecuteNonQuery();
                 }
@@ -182,29 +150,30 @@ namespace MetroBakimTakip
             LoadRecords();
         }
 
-        // Filtrele
+        // --- Tarih filtresi ---
         private void btnFilter_Click(object sender, EventArgs e)
         {
             string s = dtpStart.Value.ToString("yyyy-MM-dd");
             string e2 = dtpEnd.Value.ToString("yyyy-MM-dd");
-            var dt = new DataTable();
-            using (var conn = new SQLiteConnection(ConnectionString))
+            DataTable dt2 = new DataTable();
+            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
             {
                 conn.Open();
-                var ad = new SQLiteDataAdapter(
-                    @"SELECT Id, StationName, Title, Description, Date, Time
-                      FROM Faults
-                      WHERE Date BETWEEN @s AND @e", conn);
-                ad.SelectCommand.Parameters.AddWithValue("@s", s);
-                ad.SelectCommand.Parameters.AddWithValue("@e", e2);
-                ad.Fill(dt);
+                using (SQLiteDataAdapter da = new SQLiteDataAdapter(
+                    "SELECT Id,StationName,Title,Description,Date,Time FROM Faults " +
+                    "WHERE Date BETWEEN @s AND @e", conn))
+                {
+                    da.SelectCommand.Parameters.AddWithValue("@s", s);
+                    da.SelectCommand.Parameters.AddWithValue("@e", e2);
+                    da.Fill(dt2);
+                }
             }
-            dgvRecords.DataSource = dt;
-            lblTotalRecords.Text = $"Toplam Kayıt: {dt.Rows.Count}";
+            dgvRecords.DataSource = dt2;
+            lblTotalRecords.Text = "Toplam Kayıt: " + dt2.Rows.Count;
         }
 
-        // Yedekle
-        private void yedekleme_button_Click(object sender, EventArgs e)
+        // --- Yedekleme ---
+        private void btnBackup_Click(object sender, EventArgs e)
         {
             try
             {
@@ -213,150 +182,238 @@ namespace MetroBakimTakip
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Yedekleme hatası: {ex.Message}");
+                MessageBox.Show("Hata: " + ex.Message);
             }
         }
 
-        // Grid satırına tıklandığında formu doldur
+        // --- Grid satır tıkla ---
         private void dgvRecords_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            var row = dgvRecords.Rows[e.RowIndex];
-            txtStationName.Text = row.Cells["StationName"].Value.ToString();
-            txtTitle.Text = row.Cells["Title"].Value.ToString();
-            txtDescription.Text = row.Cells["Description"].Value.ToString();
-            dtpDate.Value = Convert.ToDateTime(row.Cells["Date"].Value);
-            dtpTime.Value = Convert.ToDateTime(row.Cells["Time"].Value);
+            DataGridViewRow r = dgvRecords.Rows[e.RowIndex];
+            txtStationName.Text = r.Cells["StationName"].Value.ToString();
+            txtTitle.Text = r.Cells["Title"].Value.ToString();
+            txtDescription.Text = r.Cells["Description"].Value.ToString();
+            dtpDate.Value = DateTime.Parse(r.Cells["Date"].Value.ToString());
+            dtpTime.Value = DateTime.Parse(r.Cells["Time"].Value.ToString());
         }
 
-        // PDF dışa aktar
+        // --- PDF Export ---
         private void btnExportPDF_Click(object sender, EventArgs e)
         {
-            var s = dtpStart.Value;
-            var e2 = dtpEnd.Value;
-            ExportToPDF(s, e2);
+            ExportToPDF(dtpStart.Value, dtpEnd.Value);
+        }
+        private void ExportToPDF(DateTime s, DateTime e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "PDF Dosyası|*.pdf";
+            sfd.FileName = "faults.pdf";
+            if (sfd.ShowDialog() != DialogResult.OK) return;
+
+            PdfWriter writer = new PdfWriter(sfd.FileName);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document doc = new Document(pdf);
+            doc.Add(new Paragraph("Metro Bakım Takip\n\n")
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
+
+            Table tbl = new Table(5);
+            tbl.AddHeaderCell("İstasyon");
+            tbl.AddHeaderCell("Başlık");
+            tbl.AddHeaderCell("Açıklama");
+            tbl.AddHeaderCell("Tarih");
+            tbl.AddHeaderCell("Saat");
+
+            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText =
+                        "SELECT StationName,Title,Description,Date,Time FROM Faults " +
+                        "WHERE Date BETWEEN @s AND @e";
+                    cmd.Parameters.AddWithValue("@s", s.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@e", e.ToString("yyyy-MM-dd"));
+
+                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            tbl.AddCell(rdr.GetString(0));
+                            tbl.AddCell(rdr.GetString(1));
+                            tbl.AddCell(rdr.GetString(2));
+                            tbl.AddCell(rdr.GetString(3));
+                            tbl.AddCell(rdr.GetString(4));
+                        }
+                    }
+                }
+            }
+
+            doc.Add(tbl);
+            doc.Close();
+            MessageBox.Show("PDF oluşturuldu.");
         }
 
-        // CSV dışa aktar
-        private void BtnExportExcel_Click(object sender, EventArgs e)
+        // --- CSV Export ---
+        private void btnExportExcel_Click(object sender, EventArgs e)
         {
-            if (!(dgvRecords.DataSource is DataTable dt) || dt.Rows.Count == 0)
+            DataTable dtX = dgvRecords.DataSource as DataTable;
+            if (dtX == null || dtX.Rows.Count == 0)
             {
                 MessageBox.Show("Aktarılacak kayıt yok.");
                 return;
             }
-            using (var sfd = new SaveFileDialog { Filter = "CSV|*.csv", FileName = "faults.csv" })
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "CSV Dosyası|*.csv";
+            sfd.FileName = "faults.csv";
+            if (sfd.ShowDialog() != DialogResult.OK) return;
+
+            using (StreamWriter sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
             {
-                if (sfd.ShowDialog() != DialogResult.OK) return;
-                using (var sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
+                // header
+                sw.WriteLine(string.Join(",", dtX.Columns.Cast<DataColumn>().Select(c => c.ColumnName)));
+                foreach (DataRow row in dtX.Rows)
                 {
-                    // başlık
-                    sw.WriteLine(string.Join(",", dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName)));
-                    // satırlar
-                    foreach (var row in dt.Rows.Cast<DataRow>())
-                    {
-                        sw.WriteLine(string.Join(",", row.ItemArray.Select(f =>
+                    string line = string.Join(",",
+                        row.ItemArray.Select(f =>
                         {
-                            var t = f.ToString();
-                            return (t.Contains(",") || t.Contains("\""))
-                                ? $"\"{t.Replace("\"", "\"\"")}\""
-                                : t;
-                        })));
-                    }
+                            string t = f.ToString();
+                            if (t.Contains(",") || t.Contains("\""))
+                                t = "\"" + t.Replace("\"", "\"\"") + "\"";
+                            return t;
+                        }));
+                    sw.WriteLine(line);
                 }
-                MessageBox.Show("CSV oluşturuldu.");
             }
+            MessageBox.Show("CSV oluşturuldu.");
         }
 
-        // ML.NET eğitim (eğer train butonunuz varsa)
-        private void BtnTrain_Click(object sender, EventArgs e)
+        // --- Eğitim Verisi Üret ---
+        private void btnExportTrainData_Click(object sender, EventArgs e)
         {
-            var ml = new MLContext(seed: 0);
-            var data = ml.Data.LoadFromTextFile<FaultData>("faults_train.csv", hasHeader: true, separatorChar: ',');
-
-            var pipeline = ml.Transforms.Concatenate("Features",
-                                nameof(FaultData.FaultCountLast7Days),
-                                nameof(FaultData.DayOfWeek),
-                                nameof(FaultData.HourOfDay))
-                           .Append(ml.BinaryClassification.Trainers.SdcaLogisticRegression());
-
-            var model = pipeline.Fit(data);
-            ml.Model.Save(model, data.Schema, _modelPath);
-            MessageBox.Show("Model eğitildi ve kaydedildi.");
+            string csvPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "faults_train.csv");
+            ExportTrainingData(csvPath);
         }
-
-        // Tahmin
-        private void BtnPredict_Click(object sender, EventArgs e)
+        private void ExportTrainingData(string path)
         {
-            // seçim veya manuel değer
-            var sample = new FaultData
+            List<string> lines = new List<string>();
+            lines.Add("FaultCountLast7Days,DayOfWeek,HourOfDay,Label");
+
+            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
             {
-                FaultCountLast7Days = /* buraya 7-gün sayısını hesaplayın */
-                DayOfWeek = (int)dtpDate.Value.DayOfWeek + 1,
-                HourOfDay = dtpTime.Value.Hour
+                conn.Open();
+                DataTable dtT = new DataTable();
+                using (SQLiteDataAdapter da = new SQLiteDataAdapter(
+                    "SELECT StationName,Date,Time FROM Faults ORDER BY StationName,Date,Time", conn))
+                {
+                    da.Fill(dtT);
+                }
+
+                foreach (DataRow r in dtT.Rows)
+                {
+                    string st = r["StationName"].ToString();
+                    DateTime d = DateTime.Parse(r["Date"].ToString());
+                    int hr = TimeSpan.Parse(r["Time"].ToString()).Hours;
+
+                    string since = d.AddDays(-7).ToString("yyyy-MM-dd");
+                    SQLiteCommand cmdCnt = new SQLiteCommand(
+                        "SELECT COUNT(*) FROM Faults WHERE StationName=@st AND Date BETWEEN @s AND @e", conn);
+                    cmdCnt.Parameters.AddWithValue("@st", st);
+                    cmdCnt.Parameters.AddWithValue("@s", since);
+                    cmdCnt.Parameters.AddWithValue("@e", d.ToString("yyyy-MM-dd"));
+                    int cnt7 = Convert.ToInt32(cmdCnt.ExecuteScalar());
+
+                    string tmr = d.AddDays(1).ToString("yyyy-MM-dd");
+                    SQLiteCommand cmdTm = new SQLiteCommand(
+                        "SELECT COUNT(*) FROM Faults WHERE StationName=@st AND Date=@dt", conn);
+                    cmdTm.Parameters.AddWithValue("@st", st);
+                    cmdTm.Parameters.AddWithValue("@dt", tmr);
+                    bool will = Convert.ToInt32(cmdTm.ExecuteScalar()) > 0;
+
+                    int dow = (int)d.DayOfWeek + 1;
+                    lines.Add(string.Format("{0},{1},{2},{3}", cnt7, dow, hr, will ? "1" : "0"));
+                }
+            }
+
+            File.WriteAllLines(path, lines, Encoding.UTF8);
+            MessageBox.Show("Eğitim verisi oluşturuldu:\n" + path);
+        }
+
+        // --- Model Eğitimi ---
+        private async void btnTrain_Click(object sender, EventArgs e)
+        {
+            string exeDir = AppDomain.CurrentDomain.BaseDirectory;
+            string csvPath = Path.Combine(exeDir, "faults_train.csv");
+            if (!File.Exists(csvPath))
+                ExportTrainingData(csvPath);
+
+            // UI’ı bloke etmemek için arka planda çalıştır
+            this.btnTrain.Text = "Eğitiliyor...";
+            this.btnTrain.Enabled = false;
+
+            await Task.Run(() =>
+            {
+                var mlContext = new MLContext(seed: 0);
+                IDataView data = mlContext.Data.LoadFromTextFile<FaultData>(
+                    path: csvPath, hasHeader: true, separatorChar: ',');
+
+                var pipeline = mlContext.Transforms
+                    .Concatenate("Features",
+                                 nameof(FaultData.FaultCountLast7Days),
+                                 nameof(FaultData.DayOfWeek),
+                                 nameof(FaultData.HourOfDay))
+                    .Append(mlContext.BinaryClassification.Trainers
+                        .SdcaLogisticRegression(labelColumnName: "Label"));
+
+                ITransformer model = pipeline.Fit(data);
+                using (FileStream fs = new FileStream(ModelFileName, FileMode.Create, FileAccess.Write))
+                    mlContext.Model.Save(model, data.Schema, fs);
+            });
+
+            MessageBox.Show("Model eğitildi ve kaydedildi:\n" + ModelFileName);
+            this.btnTrain.Text = "Train";
+            this.btnTrain.Enabled = true;
+        }
+
+        // --- Tahmin ---
+        private void btnPredict_Click(object sender, EventArgs e)
+        {
+            // 7-günlük arıza sayısı
+            int cnt7;
+            string station = txtStationName.Text;
+            string today = dtpDate.Value.ToString("yyyy-MM-dd");
+            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(
+                    "SELECT COUNT(*) FROM Faults WHERE StationName=@st AND Date BETWEEN date(@d,'-7 days') AND @d", conn))
+                {
+                    cmd.Parameters.AddWithValue("@st", station);
+                    cmd.Parameters.AddWithValue("@d", today);
+                    cnt7 = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+
+            FaultData sample = new FaultData
+            {
+                FaultCountLast7Days = cnt7,
+                DayOfWeek = (float)((int)dtpDate.Value.DayOfWeek + 1),
+                HourOfDay = (float)dtpTime.Value.Hour
             };
 
-            var ml = new MLContext();
+            var mlContext = new MLContext();
             ITransformer model;
             DataViewSchema schema;
-            using (var fs = new FileStream(_modelPath, FileMode.Open, FileAccess.Read))
-                model = ml.Model.Load(fs, out schema);
+            using (FileStream fs = new FileStream(ModelFileName, FileMode.Open, FileAccess.Read))
+                model = mlContext.Model.Load(fs, out schema);
 
-            var engine = ml.Model.CreatePredictionEngine<FaultData, FaultPrediction>(model);
-            var pred = engine.Predict(sample);
+            var engine = mlContext.Model.CreatePredictionEngine<FaultData, FaultPrediction>(model);
+            FaultPrediction pred = engine.Predict(sample);
 
-            MessageBox.Show(pred.PredictedFailure
-                ? $"Arıza bekleniyor (%{pred.Probability:P1})"
-                : $"Arıza beklenmiyor (%{pred.Probability:P1})");
-        }
+            string msg = pred.PredictedFailure
+    ? string.Format("⚠️ Arıza bekleniyor (%{0:P1})", pred.Probability)
+    : string.Format("✅ Arıza beklenmiyor (%{0:P1})", pred.Probability);
 
-        // PDF helper
-        private void ExportToPDF(DateTime start, DateTime end)
-        {
-            using (var sfd = new SaveFileDialog { Filter = "PDF|*.pdf", FileName = "faults.pdf" })
-            {
-                if (sfd.ShowDialog() != DialogResult.OK) return;
-                using (var writer = new PdfWriter(sfd.FileName))
-                using (var pdf = new PdfDocument(writer))
-                {
-                    var doc = new Document(pdf);
-                    doc.Add(new Paragraph("Metro Bakım Takip\n\n")
-                        .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
-
-                    var table = new Table(5);
-                    table.AddHeaderCell("İstasyon");
-                    table.AddHeaderCell("Başlık");
-                    table.AddHeaderCell("Açıklama");
-                    table.AddHeaderCell("Tarih");
-                    table.AddHeaderCell("Saat");
-
-                    using (var conn = new SQLiteConnection(ConnectionString))
-                    {
-                        conn.Open();
-                        using (var cmd = new SQLiteCommand(
-                            @"SELECT StationName,Title,Description,Date,Time
-                              FROM Faults
-                              WHERE Date BETWEEN @s AND @e", conn))
-                        {
-                            cmd.Parameters.AddWithValue("@s", start.ToString("yyyy-MM-dd"));
-                            cmd.Parameters.AddWithValue("@e", end.ToString("yyyy-MM-dd"));
-                            using (var rdr = cmd.ExecuteReader())
-                                while (rdr.Read())
-                                {
-                                    table.AddCell(rdr.GetString(0));
-                                    table.AddCell(rdr.GetString(1));
-                                    table.AddCell(rdr.GetString(2));
-                                    table.AddCell(rdr.GetString(3));
-                                    table.AddCell(rdr.GetString(4));
-                                }
-                        }
-                    }
-
-                    doc.Add(table);
-                    doc.Close();
-                }
-                MessageBox.Show("PDF oluşturuldu.");
-            }
+            MessageBox.Show(msg, "Öngörü Sonucu");
         }
     }
 }

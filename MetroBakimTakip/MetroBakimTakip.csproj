@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CA29B9FF-2572-488F-AE89-59E0C791DCEE}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>MetroBakimTakip</RootNamespace>
     <AssemblyName>MetroBakimTakip</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
