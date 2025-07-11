@@ -1,10 +1,22 @@
-MIT Lisansı
+MIT License
 
 Copyright (c) 2025 Emine UĞURLU
 
-Yazılımın ve ilgili dokümantasyon dosyalarının tam kopyasını elde eden herkese, yazılımı kısıtlama olmaksızın kullanma, kopyalama, değiştirme, birleştirme, yayınlama, dağıtma, alt lisans verme ve/veya satma ve yazılımın sağlandığı kişilere bu hakları verme izni, aşağıdaki koşulların yerine getirilmesi şartıyla ücretsiz olarak verilmiştir:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-Yukarıdaki telif hakkı bildirimi ve bu izin bildirimi, yazılımın tüm kopyalarına veya önemli bölümlerine dahil edilmelidir.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-YAZILIM "OLDUĞU GİBİ" SAĞLANMAKTADIR, AÇIK VEYA ÖRTÜLÜ HİÇBİR GARANTİ VERİLMEKTEDİR; TİCARİ ELVERİŞLİLİK, BELİRLİ BİR AMACA UYGUNLUK VEYA İHLAL ETMEME GİBİ GARANTİLER DE DAHİL OLMAK ÜZERE HER TÜRLÜ GARANTİ REDDEDİLİR. YAZILIMIN KULLANIMI VEYA BAŞKA BİR ŞEKİLDE YAZILIM İLE İŞLEMLERDEN KAYNAKLANAN HERHANGİ BİR TALİP, ZARAR VEYA DİĞER SORUMLULUK KONULARINDA YAZARLAR VEYA TELİF HAKKI SAHİPLERİ HİÇBİR DURUMDA SORUMLU TUTULAMAZ.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
