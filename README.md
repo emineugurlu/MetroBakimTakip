@@ -41,6 +41,8 @@ Predict fault probability (%) for any station/date/time
 Clone the repository:
 
 git clone [https://github.com/<username>/MetroBakimTakip.git](https://github.com/emineugurlu/MetroBakimTakip)
+
+
 cd MetroBakimTakip
 
 Open the solution:
