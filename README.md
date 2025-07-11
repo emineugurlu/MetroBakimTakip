@@ -1,87 +1,104 @@
 🚇 MetroBakımTakip
 
-Bir tıkla arıza verilerini yönet, bakım geçmişini görüntüle ve geleceğe dair öngörüler al!
+One-click manage fault records, view maintenance history, and gain predictive insights for the future!
 
-✨ Öne Çıkan Özellikler
+✨ Key Features
 
-Kayıt Yönetin 📝
+Manage Records 📝
 
-Hızlı arıza kaydı oluşturma, silme, filtreleme
+Quickly add, delete, and filter fault entries
 
-Gerçek zamanlı tablo araması ve tarih aralığıyla filtre
+Real-time table search and date range filtering
 
-Risk Skoru Hesaplama ⚠️
+Risk Score Calculation ⚠️
 
-Son 7 gün içindeki arıza sayısını otomatik hesaplar
+Automatically calculates the number of faults in the last 7 days
 
-Her istasyon için anında RiskScore gösterir
+Instantly displays a RiskScore per station
 
-Veri Dışa Aktarım 📤
+Data Export 📤
 
-Profesyonel PDF raporları (iText) oluşturun
+Generate professional PDF reports using iText
 
-CSV çıktısıyla tüm veriyi zahmetsizce dışa aktarın
+Effortlessly export all data to CSV
 
-Yedekleme 💾
+Backup 💾
 
-metro_backup.db adımında yedeğinizi alın
+Create a metro_backup.db backup with a single click
 
-Akıllı Tahmin 🤖
+Smart Prediction 🤖
 
-Tek tuşla faults_train.csv oluşturarak eğitim verisi hazırlayın
+One-click generation of faults_train.csv for training data
 
-ML.NET (FastTree) ile model eğitimi: faultModel.zip
+Train a FastTree model with ML.NET, saving faultModel.zip
 
-One-Hot Encoding ve hızlı eğitim (milisaniyeler!)
+Includes One-Hot Encoding and ultra-fast training (milliseconds!)
 
-Seçilen istasyon/tarih/saat için arıza olasılığını % formatında görün
+Predict fault probability (%) for any station/date/time
 
-🚀 Başlarken
+🚀 Getting Started
 
-Depoyu Klonlayın:
+Clone the repository:
 
-
-
-git clone https://github.com//MetroBakimTakip.git
+git clone https://github.com/<username>/MetroBakimTakip.git
 cd MetroBakimTakip
 
-2. **Visual Studio’yu Açın** ve `MetroBakimTakip.sln` dosyasını yükleyin.
-3. **NuGet Paketlerini Yükleyin:**
-   - `Microsoft.ML`, `Microsoft.ML.FastTree`
-   - `System.Data.SQLite` veya `Microsoft.Data.SQLite`
-   - `iText7` (`iText.Kernel`, `iText.Layout`)
-4. **Veritabanını Konumlandırın:**
-   - `metro.db` dosyasını proje köküne veya `bin\Debug` klasörüne kopyalayın.
-5. **Projeyi Derleyip Çalıştırın** (F5).
+Open the solution:
 
----
+Launch MetroBakimTakip.sln in Visual Studio
 
-## 🎯 Kullanım Akışı
+Install NuGet packages:
 
-1. **Arıza Kayıtları**: Formu doldurun, kayıt ekleyin veya silebilirsiniz.
-2. **Risk Skorunu Görüntüle**: Tabloya bakın, her satırda son 7 gün skoru hazır.
-3. **Eğitim Verisi Oluştur**: "Eğitim Verisi" butonuna tıklayın ➡️ `faults_train.csv` oluşturulur.
-4. **Modeli Eğit**: "Train" tuşu ile FastTree modelini eğitin; `faultModel.zip` hemen kaydedilir.
-5. **Tahmin (Predict)**: İstasyon, tarih ve saati seçin; saniyeler içinde arıza ihtimalini `%` olarak görün!
-6. **PDF & CSV Dışa Aktarım**: Raporlarınızı canınızın istediği gibi paylaşın.
-7. **Yedekleme**: Veritabanınızı yedekleyin, geri yüklemesi kolay olsun.
+Microsoft.ML, Microsoft.ML.FastTree
 
----
+System.Data.SQLite or Microsoft.Data.SQLite
 
-## 💡 Neden MetroBakımTakip?
+iText7 (iText.Kernel, iText.Layout)
 
-- **Hızlı ve Pratik:** Windows Forms ile anında erişim
-- **Veriye Dayalı Karar:** ML destekli tahminlerle planlama
-- **Esnek ve Özelleştirilebilir:** Kendi veri kaynaklarınıza kolay entegre edin
+Prepare the database:
 
----
+Copy metro.db to the project root or bin\Debug folder
 
-## 🤝 Katkıda Bulunma
+Build and run:
 
-Bu projeyi parlatmak için pull request’ler ve issue’lara açılan kapımız **her zaman açık**!
+Press F5 in Visual Studio
 
----
+🎯 Usage Workflow
 
-## 📜 Lisans
+Fault Records: Fill out the form to add or delete records.
 
-MIT Lisansı ile korunur. Detaylar `LICENSE` dosyasında.
+View Risk Scores: See each station’s 7-day fault score in the table.
+
+Generate Training Data: Click "Training Data" to export faults_train.csv.
+
+Train Model: Click "Train" to train the FastTree model; saves faultModel.zip.
+
+Predict: Select station, date, and time; view fault probability (%) in seconds.
+
+Export PDF & CSV: Share or archive reports as needed.
+
+Backup: Create a backup for easy restoration.
+
+📷 Screenshots
+
+<img width="1670" height="926" alt="image" src="https://github.com/user-attachments/assets/a5d190d8-2e72-4f64-8db2-f94cd77dc6eb" />
+<img width="1668" height="924" alt="image" src="https://github.com/user-attachments/assets/f4cb748e-74fd-4cd7-9799-4b3e674863ea" />
+<img width="1731" height="872" alt="Ekran görüntüsü 2025-07-11 141216" src="https://github.com/user-attachments/assets/d36865bf-49b5-4100-b397-fd1f80024211" />
+<img width="1645" height="933" alt="image" src="https://github.com/user-attachments/assets/9e2645ae-faa4-4c34-9771-3fb3cdc9600e" />
+
+💡 Why MetroBakımTakip?
+
+Fast & Intuitive: Instant desktop access with Windows Forms
+
+Data-Driven Decisions: Make planning easier with ML-based forecasts
+
+Flexible & Extensible: Integrate with your own data sources seamlessly
+
+🤝 Contributing
+
+Pull requests and issues are always welcome!
+
+📜 License
+
+This project is licensed under the MIT License. See LICENSE for details.
+
