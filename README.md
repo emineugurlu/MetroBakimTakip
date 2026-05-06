@@ -1,106 +1,61 @@
-🚇 MetroBakımTakip
+# 🚇 MetroBakımTakip: Predictive Infrastructure Management
 
-One-click manage fault records, view maintenance history, and gain predictive insights for the future!
+> **"An intelligent desktop ecosystem for metro maintenance, integrating ML.NET for predictive fault forecasting, SQLite for resilient data management, and automated risk scoring."**
 
-✨ Key Features
+![Repo Size](https://img.shields.io/github/repo-size/emineugurlu/MetroBakimTakip?color=0078d4&style=flat-square)
+![Framework](https://img.shields.io/badge/Framework-.NET%20WinForms-512bd4?style=flat-square&logo=dotnet)
+![Machine Learning](https://img.shields.io/badge/AI-ML.NET%20FastTree-512bd4?style=flat-square)
 
-Manage Records 📝
+Infrastructure reliability is mission-critical. This project is a **Predictive Maintenance System** designed to transform reactive fault logs into proactive operational insights. By implementing an **ML.NET FastTree** regression/binary classification model, the system analyzes historical patterns to forecast future fault probabilities. This bridge between traditional desktop CRUD operations and Machine Learning allows for data-driven scheduling in high-stakes metro environments.
 
-Quickly add, delete, and filter fault entries
+---
 
-Real-time table search and date range filtering
+## 🚀 Engineering Mindset
 
-Risk Score Calculation ⚠️
+This application demonstrates proficiency in **Industrial Software Architecture**:
 
-Automatically calculates the number of faults in the last 7 days
+*   **Predictive Modeling (ML.NET):** Implementing **FastTree** algorithms with One-Hot Encoding to process categorical station data and temporal features, enabling millisecond-speed fault probability forecasting.
+*   **Resilient Data Layer:** Utilizing **SQLite** for lightweight yet robust local persistence, featuring an automated one-click backup mechanism (`metro_backup.db`) to ensure zero data loss.
+*   **Algorithmic Risk Scoring:** Developing a dynamic calculation engine that monitors 7-day fault rolling windows to assign real-time **RiskScores** to individual stations.
+*   **Professional Reporting Pipeline:** Integrating **iText7** for programmatic PDF generation and custom CSV exporters to facilitate formal maintenance documentation and inter-departmental data sharing.
+*   **Binary Model Management:** Designing a workflow for on-the-fly model training (`faultModel.zip`) and immediate deployment within the application lifecycle.
 
-Instantly displays a RiskScore per station
+## 🌟 Key Features
 
-Data Export 📤
+*   🤖 **AI-Powered Forecasting:** Predict fault probability (%) for specific stations based on date/time matrices.
+*   ⚠️ **Dynamic Risk Mapping:** Instant visual feedback on station health using weighted fault frequency analysis.
+*   📤 **Enterprise Export:** Generate high-fidelity PDF reports for maintenance audits and CSVs for external analysis.
+*   💾 **Integrity Management:** Single-click database mirroring and maintenance history tracking.
 
-Generate professional PDF reports using iText
+## 🔧 Technical Stack
 
-Effortlessly export all data to CSV
+*   **Core:** .NET Framework / WinForms.
+*   **Intelligence:** ML.NET (FastTree), One-Hot Encoding.
+*   **Database:** System.Data.SQLite.
+*   **Reporting:** iText7 (PDF), CSV Serializers.
 
-Backup 💾
+## 📸 Visual Showcase
 
-Create a metro_backup.db backup with a single click
+![Prediction Interface](https://github.com/user-attachments/assets/a5d190d8-2e72-4f64-8db2-f94cd77dc6eb)
+![Training Logic](https://github.com/user-attachments/assets/f4cb748e-74fd-4cd7-9799-4b3e674863ea)
+![Management Table](https://github.com/user-attachments/assets/d36865bf-49b5-4100-b397-fd1f80024211)
+![Reporting View](https://github.com/user-attachments/assets/9e2645ae-faa4-4c34-9771-3fb3cdc9600e)
 
-Smart Prediction 🤖
+---
 
-One-click generation of faults_train.csv for training data
+## 🛠️ Getting Started
 
-Train a FastTree model with ML.NET, saving faultModel.zip
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/emineugurlu/MetroBakimTakip.git](https://github.com/emineugurlu/MetroBakimTakip.git)
+   ````
+2.**Setup:**
+  Open .sln in Visual Studio and restore NuGet packages (ML.NET, iText7, SQLite).
 
-Includes One-Hot Encoding and ultra-fast training (milliseconds!)
+3.**Database:**
+  Ensure metro.db is in the project root.
 
-Predict fault probability (%) for any station/date/time
+4. **Run:**
+   Press F5 to launch the Maintenance Dashboard.
 
-🚀 Getting Started
-
-Clone the repository:
-
-git clone [https://github.com/<username>/MetroBakimTakip.git](https://github.com/emineugurlu/MetroBakimTakip)
-
-
-cd MetroBakimTakip
-
-Open the solution:
-
-Launch MetroBakimTakip.sln in Visual Studio
-
-Install NuGet packages:
-
-Microsoft.ML, Microsoft.ML.FastTree
-
-System.Data.SQLite or Microsoft.Data.SQLite
-
-iText7 (iText.Kernel, iText.Layout)
-
-Prepare the database:
-
-Copy metro.db to the project root or bin\Debug folder
-
-Build and run:
-
-Press F5 in Visual Studio
-
-🎯 Usage Workflow
-
-Fault Records: Fill out the form to add or delete records.
-
-View Risk Scores: See each station’s 7-day fault score in the table.
-
-Generate Training Data: Click "Training Data" to export faults_train.csv.
-
-Train Model: Click "Train" to train the FastTree model; saves faultModel.zip.
-
-Predict: Select station, date, and time; view fault probability (%) in seconds.
-
-Export PDF & CSV: Share or archive reports as needed.
-
-Backup: Create a backup for easy restoration.
-
-📷 Screenshots
-
-<img width="1670" height="926" alt="image" src="https://github.com/user-attachments/assets/a5d190d8-2e72-4f64-8db2-f94cd77dc6eb" />
-<img width="1668" height="924" alt="image" src="https://github.com/user-attachments/assets/f4cb748e-74fd-4cd7-9799-4b3e674863ea" />
-<img width="1731" height="872" alt="Ekran görüntüsü 2025-07-11 141216" src="https://github.com/user-attachments/assets/d36865bf-49b5-4100-b397-fd1f80024211" />
-<img width="1645" height="933" alt="image" src="https://github.com/user-attachments/assets/9e2645ae-faa4-4c34-9771-3fb3cdc9600e" />
-
-💡 Why MetroBakımTakip?
-
-Fast & Intuitive: Instant desktop access with Windows Forms
-
-Data-Driven Decisions: Make planning easier with ML-based forecasts
-
-Flexible & Extensible: Integrate with your own data sources seamlessly
-
-🤝 Contributing
-
-Pull requests and issues are always welcome!
-
-📜 License
-
-This project is licensed under the MIT License. See LICENSE for details.
-
+Developed by Emine Uğurlu - Computer Engineer. Inspired by industrial field operations.
