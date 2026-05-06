@@ -1,0 +1,19 @@
+name: .NET Quality & Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Restore NuGet Packages
+        run: nuget restore MetroBakimTakip.sln
+
+      - name: Build Solution
+        run: msbuild MetroBakimTakip.sln /p:Configuration=Release
