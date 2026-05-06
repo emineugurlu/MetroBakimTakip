@@ -54,6 +54,7 @@ This application demonstrates proficiency in **Industrial Software Architecture*
 
 3.**Database:**
   Ensure metro.db is in the project root.
+  
 4. **Run:**
    Press F5 to launch the Maintenance Dashboard.
 
